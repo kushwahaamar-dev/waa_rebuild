@@ -79,7 +79,7 @@ export function Footer() {
                         whileInView={{ opacity: 1 }}
                         transition={{ delay: 0.2 }}
                     >
-                        © {new Date().getFullYear()} WAA. All rights reserved.
+                        © Made by <Link href="https://linkedin.com/in/kushwahaamar" target="_blank" className="hover:text-dark-1 transition-colors underline decoration-1 underline-offset-2">Amar</Link> | 2026 WAA. All rights reserved.
                     </motion.p>
                     <div className="flex space-x-6 mt-4 md:mt-0">
                         <Link href="#" className="hover:text-dark-1 transition-colors">Privacy Policy</Link>
