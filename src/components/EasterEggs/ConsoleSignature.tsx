@@ -11,6 +11,7 @@ export function ConsoleSignature() {
    Build. Break. Ship.
    
    Interested in how this was built?
+   Crafted by Amar (linkedin.com/in/kushwaha-amar)
    Join us: waa.ttu.edu/join
 
    [ARCHITECTURAL_MINIMALISM_V2.0.0_LOADED]
