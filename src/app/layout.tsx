@@ -35,23 +35,32 @@ import { KonamiMatrix } from "@/components/EasterEggs/KonamiMatrix";
 import { ConsoleSignature } from "@/components/EasterEggs/ConsoleSignature";
 import { Analytics } from "@vercel/analytics/react";
 
+import { ThemeProvider } from "@/components/ThemeProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable} antialiased bg-light-1 text-dark-1 font-sans selection:bg-dark-1 selection:text-light-1`}
+        className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable} antialiased bg-light-1 text-dark-1 font-sans selection:bg-dark-1 selection:text-light-1 transition-colors duration-300`}
       >
-        <ConsoleSignature />
-        <KonamiMatrix />
-        <GridBackground />
-        <div className="relative z-10">
-          {children}
-        </div>
-        <Analytics />
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <ConsoleSignature />
+          <KonamiMatrix />
+          <GridBackground />
+          <div className="relative z-10">
+            {children}
+          </div>
+          <Analytics />
+        </ThemeProvider>
       </body>
     </html>
   );

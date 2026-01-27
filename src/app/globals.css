@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-light-1: #f9f9f9;
-  --color-dark-1: #191919;
+  --color-light-1: var(--light-1);
+  --color-dark-1: var(--dark-1);
 
   --font-serif: var(--font-serif);
   --font-sans: var(--font-sans);
@@ -33,9 +33,18 @@
   }
 }
 
-:root {
-  --light-1: #f9f9f9;
-  --dark-1: #191919;
+@layer base {
+  :root {
+    --light-1: #f9f9f9;
+    --dark-1: #191919;
+  }
+
+  .dark {
+    --light-1: #0a0a0a;
+    /* Deep dark background */
+    --dark-1: #f9f9f9;
+    /* Light text */
+  }
 }
 
 body {
