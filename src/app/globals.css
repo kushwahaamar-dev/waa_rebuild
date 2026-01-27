@@ -40,7 +40,7 @@
   --border-subtle: rgba(0, 0, 0, 0.06);
 }
 
-[data-theme="dark"] {
+.dark {
   --light-1: #191919;
   --dark-1: #f9f9f9;
   --bubble-bg: linear-gradient(145deg, rgba(30, 30, 30, 0.95), rgba(30, 30, 30, 0.8));

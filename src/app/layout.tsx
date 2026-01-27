@@ -47,7 +47,7 @@ export default function RootLayout({
         className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable} antialiased bg-light-1 text-dark-1 font-sans selection:bg-dark-1 selection:text-light-1`}
       >
         <ThemeProvider
-          attribute="data-theme"
+          attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
