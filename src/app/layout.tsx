@@ -24,6 +24,11 @@ const jetbrains = JetBrains_Mono({
 export const metadata: Metadata = {
   title: "WAA - Web3 Acceleration Association",
   description: "Educate. Innovate. Connect. The student-led nonprofit accelerating Web3 adoption at Texas Tech.",
+  icons: {
+    icon: "/images/waa-logo.png",
+    shortcut: "/images/waa-logo.png",
+    apple: "/images/waa-logo.png",
+  },
 };
 
 import { KonamiMatrix } from "@/components/EasterEggs/KonamiMatrix";
