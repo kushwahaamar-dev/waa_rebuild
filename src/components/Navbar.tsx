@@ -52,6 +52,7 @@ export function Navbar() {
                                 <span className="absolute left-0 -bottom-0.5 w-0 h-[2px] bg-dark-1 transition-all duration-300 ease-out group-hover:w-full" />
                             </Link>
                         ))}
+                        <ThemeToggle />
                         <Link href="/join">
                             <motion.div
                                 whileHover={{ scale: 1.05, y: -2 }}
