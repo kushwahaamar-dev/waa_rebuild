@@ -22,7 +22,7 @@ export default function EventsPage() {
                 <div className="bg-white rounded-2xl border border-dark-1/10 overflow-hidden shadow-sm min-h-[600px] relative">
                     {/* Luma Iframe */}
                     <iframe
-                        src="https://lu.ma/embed/calendar/cal-NMz1EFCa5I7aJ8w" // Used a placeholder/example ID. The user needs to swap this.
+                        src="https://lu.ma/embed/calendar/cal-G1ZxPHJzz4H3U2C"
                         className="w-full h-[800px] border-none"
                         allowFullScreen
                         aria-hidden="false"
