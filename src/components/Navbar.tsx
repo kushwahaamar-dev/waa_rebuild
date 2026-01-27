@@ -27,8 +27,13 @@ export function Navbar() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        <Link href="/" className="text-xl font-bold font-sans tracking-tight">
-                            WAA
+                        <Link href="/" className="block">
+                            <span className="sr-only">WAA</span>
+                            <img
+                                src="/images/waa-logo.png"
+                                alt="WAA Logo"
+                                className="h-10 w-auto object-contain"
+                            />
                         </Link>
                     </motion.div>
 

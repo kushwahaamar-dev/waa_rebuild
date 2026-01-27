@@ -14,8 +14,13 @@ export function Footer() {
                     {/* Brand Column */}
                     <div className="md:col-span-1 p-8 md:p-12 border-b md:border-b-0 md:border-r border-dark-1/10 flex flex-col justify-between h-full min-h-[300px]">
                         <div>
-                            <Link href="/" className="text-2xl font-serif font-bold tracking-tight block mb-6">
-                                WAA
+                            <Link href="/" className="block mb-6">
+                                <span className="sr-only">WAA</span>
+                                <img
+                                    src="/images/waa-logo.png"
+                                    alt="WAA Logo"
+                                    className="h-12 w-auto object-contain"
+                                />
                             </Link>
                             <p className="text-xs font-mono text-dark-1/60 leading-relaxed max-w-[200px] uppercase tracking-wide">
                                 Educate. Innovate. Connect.<br />
