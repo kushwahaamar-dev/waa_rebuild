@@ -8,7 +8,7 @@ import { cn } from "@/lib/utils";
 export function FeatureGrid() {
     return (
         <section className="py-24 max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 border-t border-l border-dark-1/10 bg-white">
+            <div className="grid grid-cols-1 lg:grid-cols-3 border-t border-l border-dark-1/10 bg-white/50 dark:bg-white/5 backdrop-blur-sm">
                 {/* Feature 1 - N3XUS */}
                 <FeatureCard
                     icon={<Trophy className="w-5 h-5" />}
@@ -59,13 +59,13 @@ function FeatureCard({
     return (
         <Link href={href} className={cn(
             "group relative p-8 md:p-12 border-r border-b border-dark-1/10 transition-all duration-300",
-            "hover:bg-dark-1 hover:text-white overflow-hidden bg-grid-pattern",
+            "hover:bg-dark-1 hover:text-light-1 dark:hover:bg-light-1 dark:hover:text-dark-1 overflow-hidden bg-grid-pattern",
             "flex flex-col justify-between",
             className
         )}>
             {/* Content */}
             <div className="relative z-10">
-                <div className="mb-6 text-dark-1 group-hover:text-white transition-colors">
+                <div className="mb-6 text-dark-1 group-hover:text-light-1 dark:group-hover:text-dark-1 transition-colors">
                     {icon}
                 </div>
                 <h3 className="text-2xl font-serif mb-3 leading-tight">{title}</h3>
@@ -79,7 +79,7 @@ function FeatureCard({
 
             {/* ASCII Background */}
             <div className="absolute right-4 bottom-4 pointer-events-none grayscale group-hover:grayscale-0 transition-all duration-300">
-                <div className="text-dark-1/10 group-hover:text-white/10">
+                <div className="text-dark-1/10 group-hover:text-light-1/10 dark:text-light-1/10 dark:group-hover:text-dark-1/10">
                     {ascii}
                 </div>
             </div>
