@@ -157,7 +157,7 @@ export function TeamGrid() {
                 }
             `}</style>
 
-            <div className="overflow-hidden py-4">
+            <div className="overflow-hidden py-20">
                 <div className="flex gap-8 animate-scroll hover:pause">
                     {/* Triple duplication for seamless loop */}
                     {[...teamMembers, ...teamMembers, ...teamMembers].map((member, i) => (
