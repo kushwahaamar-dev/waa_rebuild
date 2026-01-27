@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 @theme {
-  --color-light-1: var(--light-1);
-  --color-dark-1: var(--dark-1);
+  --color-light-1: #f9f9f9;
+  --color-dark-1: #191919;
 
   --font-serif: var(--font-serif);
   --font-sans: var(--font-sans);
@@ -33,18 +33,18 @@
   }
 }
 
-@layer base {
-  :root {
-    --light-1: #f9f9f9;
-    --dark-1: #191919;
-  }
+:root {
+  --light-1: #f9f9f9;
+  --dark-1: #191919;
+  --bubble-bg: linear-gradient(145deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.8));
+  --border-subtle: rgba(0, 0, 0, 0.06);
+}
 
-  .dark {
-    --light-1: #0a0a0a;
-    /* Deep dark background */
-    --dark-1: #f9f9f9;
-    /* Light text */
-  }
+[data-theme="dark"] {
+  --light-1: #191919;
+  --dark-1: #f9f9f9;
+  --bubble-bg: linear-gradient(145deg, rgba(30, 30, 30, 0.95), rgba(30, 30, 30, 0.8));
+  --border-subtle: rgba(255, 255, 255, 0.1);
 }
 
 body {

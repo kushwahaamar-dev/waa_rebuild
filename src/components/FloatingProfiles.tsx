@@ -316,12 +316,12 @@ export const FloatingProfiles = () => {
                             transform: "translate(-500px, -500px)",
                             width: `${[200, 180, 170, 160, 150, 140, 140][index]}px`,
                             height: `${[200, 180, 170, 160, 150, 140, 140][index]}px`,
-                            background: `linear-gradient(145deg, rgba(255,255,255,0.95), rgba(255,255,255,0.8))`,
+                            background: "var(--bubble-bg)",
                             backdropFilter: "blur(8px)",
                             WebkitBackdropFilter: "blur(8px)",
                             border: isDragged
                                 ? `2px solid ${member.color}`
-                                : `1px solid rgba(0,0,0,0.06)`,
+                                : `1px solid var(--border-subtle)`,
                             zIndex: isDragged ? 30 : 5,
                         }}
                     >

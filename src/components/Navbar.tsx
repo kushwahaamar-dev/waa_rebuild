@@ -5,7 +5,8 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { AnimatedLink, MagneticButton } from "./MicroInteractions";
+import { ThemeToggle } from "./ThemeToggle";
 
 const links = [
     { href: "/about", label: "About" },
@@ -51,7 +52,6 @@ export function Navbar() {
                                 <span className="absolute left-0 -bottom-0.5 w-0 h-[2px] bg-dark-1 transition-all duration-300 ease-out group-hover:w-full" />
                             </Link>
                         ))}
-                        <ThemeToggle />
                         <Link href="/join">
                             <motion.div
                                 whileHover={{ scale: 1.05, y: -2 }}
@@ -66,8 +66,7 @@ export function Navbar() {
                     </div>
 
                     {/* Mobile Menu Button */}
-                    <div className="md:hidden flex items-center gap-4">
-                        <ThemeToggle />
+                    <div className="md:hidden">
                         <motion.button
                             onClick={() => setIsOpen(!isOpen)}
                             className="p-2 text-dark-1 focus:outline-none"
@@ -134,6 +133,7 @@ export function Navbar() {
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: links.length * 0.05 }}
                             >
+                                <ThemeToggle />
                                 <Link href="/join" onClick={() => setIsOpen(false)}>
                                     <Button className="w-full rounded-full">Join WAA</Button>
                                 </Link>

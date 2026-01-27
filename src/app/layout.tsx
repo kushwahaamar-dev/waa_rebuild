@@ -34,7 +34,6 @@ export const metadata: Metadata = {
 import { KonamiMatrix } from "@/components/EasterEggs/KonamiMatrix";
 import { ConsoleSignature } from "@/components/EasterEggs/ConsoleSignature";
 import { Analytics } from "@vercel/analytics/react";
-
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 export default function RootLayout({
@@ -45,10 +44,10 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body
-        className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable} antialiased bg-light-1 text-dark-1 font-sans selection:bg-dark-1 selection:text-light-1 transition-colors duration-300`}
+        className={`${fraunces.variable} ${inter.variable} ${jetbrains.variable} antialiased bg-light-1 text-dark-1 font-sans selection:bg-dark-1 selection:text-light-1`}
       >
         <ThemeProvider
-          attribute="class"
+          attribute="data-theme"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
