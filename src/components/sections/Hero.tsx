@@ -70,7 +70,7 @@ const FloatingIcon = ({ delay = 0, className = "" }: { delay?: number, className
 const StatsBadge = ({ number, label, delay }: { number: string, label: string, delay: number }) => {
     return (
         <motion.div
-            className="flex items-center gap-2 bg-dark-1/5 px-4 py-2 rounded-full border border-dark-1/5 bg-white/50 backdrop-blur-sm"
+            className="flex items-center gap-2 bg-dark-1/5 px-4 py-2 rounded-full border border-dark-1/5 bg-white/50 dark:bg-white/5 backdrop-blur-sm"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay, duration: 0.5 }}

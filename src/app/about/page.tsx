@@ -50,7 +50,7 @@ export default function AboutPage() {
 
                 {/* Info Grid */}
                 <section className="mb-24">
-                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center bg-white border border-dark-1/10 rounded-2xl p-12 shadow-sm">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center bg-white dark:bg-white/5 border border-dark-1/10 rounded-2xl p-12 shadow-sm">
                         <div>
                             <h3 className="font-serif text-2xl mb-2">Location</h3>
                             <p className="text-dark-1/60 font-sans">Texas Tech University<br />Lubbock, TX</p>

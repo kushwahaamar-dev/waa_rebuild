@@ -50,7 +50,7 @@ export default function JoinPage() {
             <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full mb-24">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* New to Web3 */}
-                    <Card className="border-dark-1/10 bg-white shadow-sm hover:border-dark-1/20 transition-all overflow-hidden relative group">
+                    <Card className="border-dark-1/10 bg-white dark:bg-white/5 shadow-sm hover:border-dark-1/20 transition-all overflow-hidden relative group">
                         <CardHeader>
                             <div className="w-12 h-12 bg-dark-1/5 rounded-full flex items-center justify-center mb-4 text-dark-1">
                                 <UserPlus className="w-6 h-6" />
@@ -78,7 +78,7 @@ export default function JoinPage() {
                     </Card>
 
                     {/* Web3 Native */}
-                    <Card className="border-dark-1/10 bg-white shadow-sm hover:border-dark-1/20 transition-all overflow-hidden relative group">
+                    <Card className="border-dark-1/10 bg-white dark:bg-white/5 shadow-sm hover:border-dark-1/20 transition-all overflow-hidden relative group">
                         <CardHeader>
                             <div className="w-12 h-12 bg-dark-1/5 rounded-full flex items-center justify-center mb-4 text-dark-1">
                                 <Gem className="w-6 h-6" />
@@ -103,7 +103,7 @@ export default function JoinPage() {
             </section>
 
             {/* Digital Membership Detail */}
-            <section className="bg-white border-y border-dark-1/5 py-24 mb-24">
+            <section className="bg-white dark:bg-white/5 border-y border-dark-1/5 py-24 mb-24">
                 <div className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     <div>
                         <h2 className="text-4xl md:text-5xl font-serif mb-6 text-dark-1">Digital Membership: Semesters 4 & 5</h2>
@@ -147,7 +147,7 @@ export default function JoinPage() {
             <section className="px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full mb-24">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* Innovate */}
-                    <div className="bg-white border border-dark-1/10 text-dark-1 rounded-3xl p-8 md:p-12">
+                    <div className="bg-white dark:bg-white/5 border border-dark-1/10 text-dark-1 rounded-3xl p-8 md:p-12">
                         <Lightbulb className="w-10 h-10 mb-6 text-dark-1" />
                         <h3 className="text-3xl font-serif mb-4">Innovate with WAA</h3>
                         <p className="text-dark-1/70 mb-8 leading-relaxed font-sans">

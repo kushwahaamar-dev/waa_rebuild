@@ -57,7 +57,7 @@ export default function LearnPage() {
             <section className="px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto w-full mb-32">
                 <div className="space-y-8">
                     {/* Beginner - AVAILABLE */}
-                    <div className="bg-white border border-dark-1/10 rounded-2xl p-8 md:p-10 shadow-sm relative overflow-hidden group hover:border-dark-1/20 transition-all">
+                    <div className="bg-white dark:bg-white/5 border border-dark-1/10 rounded-2xl p-8 md:p-10 shadow-sm relative overflow-hidden group hover:border-dark-1/20 transition-all">
                         <div className="absolute top-0 left-0 w-1 h-full bg-dark-1/30"></div>
                         <div className="flex flex-col md:flex-row gap-6 md:gap-10">
                             <div className="flex-shrink-0">
@@ -99,7 +99,7 @@ export default function LearnPage() {
                     </div>
 
                     {/* Intermediate - COMING SOON */}
-                    <div className="bg-white border border-dark-1/10 rounded-2xl p-8 md:p-10 shadow-sm relative overflow-hidden group opacity-70">
+                    <div className="bg-white dark:bg-white/5 border border-dark-1/10 rounded-2xl p-8 md:p-10 shadow-sm relative overflow-hidden group opacity-70">
                         <div className="absolute top-0 left-0 w-1 h-full bg-dark-1/20"></div>
                         <div className="flex flex-col md:flex-row gap-6 md:gap-10">
                             <div className="flex-shrink-0">
@@ -121,7 +121,7 @@ export default function LearnPage() {
                     </div>
 
                     {/* Advanced - COMING SOON */}
-                    <div className="bg-white border border-dark-1/10 rounded-2xl p-8 md:p-10 shadow-sm relative overflow-hidden group opacity-70">
+                    <div className="bg-white dark:bg-white/5 border border-dark-1/10 rounded-2xl p-8 md:p-10 shadow-sm relative overflow-hidden group opacity-70">
                         <div className="absolute top-0 left-0 w-1 h-full bg-dark-1/20"></div>
                         <div className="flex flex-col md:flex-row gap-6 md:gap-10">
                             <div className="flex-shrink-0">

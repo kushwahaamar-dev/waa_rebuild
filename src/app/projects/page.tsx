@@ -104,7 +104,7 @@ export default function ProjectsPage() {
             <div className="flex-grow px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full mb-24">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                     {projects.map((project, index) => (
-                        <Card key={index} className={`bg-white border-dark-1/5 hover:border-dark-1/20 transition-all duration-300 group flex flex-col overflow-hidden ${project.featured ? 'md:col-span-2 md:flex-row' : ''}`}>
+                        <Card key={index} className={`bg-white dark:bg-white/5 border-dark-1/5 hover:border-dark-1/20 transition-all duration-300 group flex flex-col overflow-hidden ${project.featured ? 'md:col-span-2 md:flex-row' : ''}`}>
                             {/* Featured Image or Standard Image */}
                             {project.image ? (
                                 <div className={`${project.featured ? 'w-full md:w-1/2 h-64 md:h-auto' : 'w-full h-48'} bg-dark-1/5 relative overflow-hidden border-b md:border-b-0 ${project.featured ? 'md:border-r' : ''} border-dark-1/5`}>
