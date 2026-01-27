@@ -145,10 +145,6 @@ const RotatingRow = ({ members, direction = "left", speed = 30 }: { members: Tea
 }
 
 export function TeamGrid() {
-    // Split into two rows for variety
-    const row1 = teamMembers.slice(0, 4)
-    const row2 = teamMembers.slice(4)
-
     return (
         <div className="w-screen -mx-[50vw] left-1/2 relative">
             <style jsx global>{`
@@ -157,15 +153,18 @@ export function TeamGrid() {
                     100% { transform: translateX(-33.333%); }
                 }
                 .animate-scroll {
-                    animation: scroll linear infinite;
+                    animation: scroll 40s linear infinite;
                 }
             `}</style>
 
-            {/* Row 1 - scrolls left */}
-            <RotatingRow members={[...row1, ...row2]} direction="left" speed={40} />
-
-            {/* Row 2 - scrolls right */}
-            <RotatingRow members={[...row2, ...row1]} direction="right" speed={35} />
+            <div className="overflow-hidden py-4">
+                <div className="flex gap-8 animate-scroll hover:pause">
+                    {/* Triple duplication for seamless loop */}
+                    {[...teamMembers, ...teamMembers, ...teamMembers].map((member, i) => (
+                        <Avatar key={`${member.name}-${i}`} member={member} size={120} />
+                    ))}
+                </div>
+            </div>
         </div>
     )
 }
