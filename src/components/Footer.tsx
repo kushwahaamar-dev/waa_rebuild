@@ -10,7 +10,7 @@ export function Footer() {
     return (
         <footer className="bg-light-1 pt-0 pb-0 relative overflow-hidden border-t border-dark-1/10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-4 border-l border-r border-dark-1/10 h-full">
+                <div className="grid grid-cols-1 md:grid-cols-4 h-full">
                     {/* Brand Column */}
                     <div className="md:col-span-1 p-8 md:p-12 border-b md:border-b-0 md:border-r border-dark-1/10 flex flex-col justify-between h-full min-h-[300px]">
                         <div>
@@ -78,7 +78,7 @@ export function Footer() {
                     </div>
                 </div>
 
-                <div className="border-t border-l border-r border-b border-dark-1/10 p-4 flex flex-col md:flex-row justify-between items-center text-[10px] font-mono uppercase tracking-widest text-dark-1/40 bg-light-1">
+                <div className="border-t border-dark-1/10 p-4 flex flex-col md:flex-row justify-between items-center text-[10px] font-mono uppercase tracking-widest text-dark-1/40 bg-light-1">
                     <motion.p
                         initial={{ opacity: 0 }}
                         whileInView={{ opacity: 1 }}
