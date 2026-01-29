@@ -698,3 +698,93 @@ export const AsciiFluxCard = ({ className = "" }: { className?: string }) => {
         </pre>
     )
 }
+
+// ============================================
+// 15. COLLEGE.XYZ PATHWAY ANIMATION
+// ============================================
+export const AsciiCollegeXYZ = ({ className = "" }: { className?: string }) => {
+    const [frame, setFrame] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setFrame(f => (f + 1) % 12);
+        }, 200);
+        return () => clearInterval(interval);
+    }, []);
+
+    const renderPathways = () => {
+        const width = 32;
+        const height = 18;
+        const output: string[][] = Array(height).fill(null).map(() => Array(width).fill(' '));
+
+        // Central hub (college)
+        const centerX = 8;
+        const centerY = 9;
+
+        // Industry nodes (destinations)
+        const nodes = [
+            { x: 26, y: 3, label: '◆' },   // Top right
+            { x: 28, y: 9, label: '◆' },   // Right
+            { x: 26, y: 15, label: '◆' },  // Bottom right
+            { x: 18, y: 2, label: '◇' },   // Top
+            { x: 18, y: 16, label: '◇' },  // Bottom
+        ];
+
+        // Draw pathways with animation
+        nodes.forEach((node, idx) => {
+            const progress = ((frame + idx * 2) % 12) / 12;
+
+            // Draw line from center to node
+            const steps = 20;
+            for (let i = 0; i < steps; i++) {
+                const t = i / steps;
+                const x = Math.round(centerX + (node.x - centerX) * t);
+                const y = Math.round(centerY + (node.y - centerY) * t);
+
+                if (x >= 0 && x < width && y >= 0 && y < height) {
+                    // Animated pulse along the path
+                    const dist = Math.abs(t - progress);
+                    if (dist < 0.15) {
+                        output[y][x] = '●';
+                    } else if (dist < 0.3) {
+                        output[y][x] = '○';
+                    } else {
+                        output[y][x] = output[y][x] === ' ' ? '·' : output[y][x];
+                    }
+                }
+            }
+
+            // Draw node
+            if (node.x < width && node.y < height) {
+                output[node.y][node.x] = node.label;
+            }
+        });
+
+        // Draw central hub
+        const hubChars = ['◉', '◎'];
+        const hubChar = hubChars[Math.floor(frame / 3) % 2];
+        output[centerY][centerX] = hubChar;
+        output[centerY - 1][centerX] = '│';
+        output[centerY + 1][centerX] = '│';
+        output[centerY][centerX - 1] = '─';
+        output[centerY][centerX + 1] = '─';
+
+        // Add some floating particles
+        const particles = ['✦', '✧', '·'];
+        for (let i = 0; i < 5; i++) {
+            const px = (frame * 3 + i * 7) % width;
+            const py = (frame + i * 4) % height;
+            if (output[py][px] === ' ') {
+                output[py][px] = particles[i % particles.length];
+            }
+        }
+
+        return output.map(row => row.join('')).join('\n');
+    };
+
+    return (
+        <pre className={`font-mono text-xs leading-tight text-dark-1/25 select-none whitespace-pre ${className}`}>
+            {renderPathways()}
+        </pre>
+    );
+}
