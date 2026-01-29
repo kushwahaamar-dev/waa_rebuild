@@ -9,12 +9,12 @@ export function FeatureGrid() {
     return (
         <section className="py-24 max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 lg:grid-cols-3 border-t border-l border-dark-1/10 bg-white/50 dark:bg-white/5 backdrop-blur-sm">
-                {/* Feature 1 - N3XUS */}
+                {/* Feature 1 - MBC Conference */}
                 <FeatureCard
                     icon={<Trophy className="w-5 h-5" />}
-                    title="N3XUS Buildathon"
-                    description="11-week inter-college buildathon. Onboarding the next generation of builders."
-                    href="https://app.buidlbox.io/ttu-waa/n3xus/overview"
+                    title="MBC Conference"
+                    description="Midwest Blockchain Consortium. Connecting blockchain innovators across the region."
+                    href="https://www.midwestblockchain.org/"
                     className="lg:col-span-2 lg:row-span-2 min-h-[400px]"
                     ascii={<AsciiIsometricBuild className="scale-[3.5] opacity-100 lg:opacity-40 lg:group-hover:opacity-100 transition-opacity duration-700" />}
                 />
