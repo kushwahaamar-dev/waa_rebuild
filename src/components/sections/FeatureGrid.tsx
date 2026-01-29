@@ -1,14 +1,14 @@
 "use client"
 
 import Link from "next/link";
-import { ArrowRight, Box, GraduationCap, Trophy } from "lucide-react";
-import { AsciiIsometricBuild, AsciiGlobe, AsciiFluxCard } from "@/components/AsciiAnimations";
+import { ArrowRight, Box, GraduationCap, Trophy, Rocket, Users } from "lucide-react";
+import { AsciiIsometricBuild, AsciiGlobe, AsciiFluxCard, AsciiNetwork } from "@/components/AsciiAnimations";
 import { cn } from "@/lib/utils";
 
 export function FeatureGrid() {
     return (
         <section className="py-24 max-w-7xl mx-auto relative z-10 px-4 sm:px-6 lg:px-8">
-            <div className="grid grid-cols-1 lg:grid-cols-3 border-t border-l border-dark-1/10 bg-white/50 dark:bg-white/5 backdrop-blur-sm">
+            <div className="grid grid-cols-1 lg:grid-cols-4 border-t border-l border-dark-1/10 bg-white/50 dark:bg-white/5 backdrop-blur-sm">
                 {/* Feature 1 - MBC Conference */}
                 <FeatureCard
                     icon={<Trophy className="w-5 h-5" />}
@@ -19,21 +19,33 @@ export function FeatureGrid() {
                     ascii={<AsciiIsometricBuild className="scale-[3.5] opacity-100 lg:opacity-40 lg:group-hover:opacity-100 transition-opacity duration-700" />}
                 />
 
-                {/* Feature 2 - Learn */}
+                {/* Feature 2 - college.xyz */}
+                <FeatureCard
+                    icon={<Rocket className="w-5 h-5" />}
+                    title="college.xyz"
+                    description="Bridging talent and industry. Resources, bounties, and career pathways for Web3 builders."
+                    href="https://www.college.xyz/"
+                    className="lg:col-span-2 lg:row-span-2 min-h-[400px]"
+                    ascii={<AsciiNetwork className="scale-[3] opacity-100 lg:opacity-40 lg:group-hover:opacity-100 transition-opacity duration-700" />}
+                />
+
+                {/* Feature 3 - Learn */}
                 <FeatureCard
                     icon={<GraduationCap className="w-5 h-5" />}
                     title="Web3 Unfolded"
                     description="Curated curriculum. From zero to shipped dApp."
                     href="/learn"
+                    className="lg:col-span-2"
                     ascii={<AsciiGlobe className="scale-[2.5] opacity-80 lg:opacity-30 lg:group-hover:opacity-80 transition-opacity duration-700" />}
                 />
 
-                {/* Feature 3 - Membership */}
+                {/* Feature 4 - Membership */}
                 <FeatureCard
                     icon={<Box className="w-5 h-5" />}
                     title="Digital Membership"
                     description="Exclusive NFT access. Crafted by student artists."
                     href="/join"
+                    className="lg:col-span-2"
                     ascii={<AsciiFluxCard className="scale-[2.5] opacity-80 lg:opacity-30 lg:group-hover:opacity-80 transition-opacity duration-700" />}
                 />
             </div>
