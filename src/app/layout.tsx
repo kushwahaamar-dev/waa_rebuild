@@ -34,6 +34,7 @@ export const metadata: Metadata = {
 import { KonamiMatrix } from "@/components/EasterEggs/KonamiMatrix";
 import { ConsoleSignature } from "@/components/EasterEggs/ConsoleSignature";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/ThemeProvider";
 
 export default function RootLayout({
@@ -59,6 +60,7 @@ export default function RootLayout({
             {children}
           </div>
           <Analytics />
+          <SpeedInsights />
         </ThemeProvider>
       </body>
     </html>
