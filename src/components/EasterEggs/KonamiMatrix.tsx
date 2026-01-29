@@ -1,54 +1,49 @@
 "use client"
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { MatrixRain } from "../AsciiAnimations";
 import { motion, AnimatePresence } from "framer-motion";
+
+const DESTINATION_URL = "https://rankr.me/community/68";
 
 export function KonamiMatrix() {
     const [active, setActive] = useState(false);
     const [sequence, setSequence] = useState<string[]>([]);
+    const [preloaded, setPreloaded] = useState(false);
+    const iframeRef = useRef<HTMLIFrameElement>(null);
 
-    // Konami Code: Up, Up, Down, Down, Left, Right, Left, Right, B, A
-    const konamiCode = [
-        "ArrowUp", "ArrowUp",
-        "ArrowDown", "ArrowDown",
-        "ArrowLeft", "ArrowRight",
-        "ArrowLeft", "ArrowRight",
-        "b", "a"
-    ];
+    // New code: "lvlup" (l, v, l, u, p)
+    const secretCode = ["l", "v", "l", "u", "p"];
 
+    // Preload the destination page when component mounts
     useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            setSequence(prev => {
-                const newSequence = [...prev, e.key];
-                // Keep only the last N keys where N is konami code length
-                if (newSequence.length > konamiCode.length) {
-                    newSequence.shift();
-                }
+        // Create hidden iframe to preload destination
+        const iframe = document.createElement('iframe');
+        iframe.src = DESTINATION_URL;
+        iframe.style.display = 'none';
+        iframe.style.width = '0';
+        iframe.style.height = '0';
+        iframe.style.border = 'none';
+        iframe.style.position = 'absolute';
+        iframe.style.left = '-9999px';
+        iframe.onload = () => setPreloaded(true);
+        document.body.appendChild(iframe);
 
-                // Check match
-                if (JSON.stringify(newSequence) === JSON.stringify(konamiCode)) {
-                    setActive(true);
-                    return []; // Reset sequence
-                }
-
-                return newSequence;
-            });
+        return () => {
+            if (iframe.parentNode) {
+                iframe.parentNode.removeChild(iframe);
+            }
         };
+    }, []);
 
-        window.addEventListener("keydown", handleKeyDown);
-        return () => window.removeEventListener("keydown", handleKeyDown);
-    }, [sequence]); // sequence dependency might be needed if state update relies on it, but functional update handles prev. actually dependency is empty usually for listener but since we use functional update on state it's fine. 
-    // Wait, dependency array: if I use prev state in setSequence, I don't strictly need 'sequence' in dependency of useEffect, 
-    // BUT since I need to check the updated sequence to trigger 'setActive', doing it inside the setter or an effect on sequence is better.
-    // Let's refine: Use a separate effect to check sequence matches.
-
-    // Better approach:
+    // Listen for the secret code
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
+            if (active) return; // Don't track while overlay is active
+
             setSequence(prev => {
-                const updated = [...prev, e.key].slice(-konamiCode.length);
-                if (JSON.stringify(updated) === JSON.stringify(konamiCode)) {
+                const updated = [...prev, e.key.toLowerCase()].slice(-secretCode.length);
+                if (JSON.stringify(updated) === JSON.stringify(secretCode)) {
                     setActive(true);
                 }
                 return updated;
@@ -57,25 +52,24 @@ export function KonamiMatrix() {
 
         window.addEventListener("keydown", handleKeyDown);
         return () => window.removeEventListener("keydown", handleKeyDown);
-    }, []);
+    }, [active]);
 
-    // Dismiss on click/escape
+    // Handle Enter to navigate and Escape to dismiss
     useEffect(() => {
         if (!active) return;
 
-        const dismiss = (e: KeyboardEvent | MouseEvent) => {
-            if (e.type === 'click' || (e as KeyboardEvent).key === 'Escape') {
+        const handleKeyDown = (e: KeyboardEvent) => {
+            if (e.key === 'Enter') {
+                // Navigate to destination in same tab
+                window.location.href = DESTINATION_URL;
+            } else if (e.key === 'Escape') {
                 setActive(false);
                 setSequence([]);
             }
         };
 
-        window.addEventListener("keydown", dismiss);
-        window.addEventListener("click", dismiss);
-        return () => {
-            window.removeEventListener("keydown", dismiss);
-            window.removeEventListener("click", dismiss);
-        };
+        window.addEventListener("keydown", handleKeyDown);
+        return () => window.removeEventListener("keydown", handleKeyDown);
     }, [active]);
 
     return (
@@ -85,7 +79,8 @@ export function KonamiMatrix() {
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
-                    className="fixed inset-0 z-[99999] bg-black cursor-pointer"
+                    transition={{ duration: 0.3 }}
+                    className="fixed inset-0 z-[99999] bg-black"
                 >
                     <div className="absolute inset-0 opacity-50">
                         <MatrixRain width={100} height={40} className="w-full h-full text-green-500 scale-150 transform-origin-top-left" />
@@ -93,8 +88,23 @@ export function KonamiMatrix() {
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center font-mono text-green-500">
                         <h1 className="text-4xl mb-4 blink">SYSTEM ENTRY GRANTED</h1>
                         <p className="text-sm opacity-70">Welcome to the inner circle.</p>
-                        <p className="text-xs mt-8 opacity-40">Press ESC to exit</p>
+                        <motion.p
+                            className="text-lg mt-8 opacity-90"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: [0.5, 1, 0.5] }}
+                            transition={{ duration: 1.5, repeat: Infinity }}
+                        >
+                            Press ENTER to continue →
+                        </motion.p>
+                        <p className="text-xs mt-4 opacity-40">Press ESC to exit</p>
                     </div>
+                    {/* Hidden preloaded iframe for seamless transition */}
+                    <iframe
+                        ref={iframeRef}
+                        src={DESTINATION_URL}
+                        className="hidden"
+                        aria-hidden="true"
+                    />
                 </motion.div>
             )}
         </AnimatePresence>
