@@ -60,7 +60,7 @@ const FloatingIcon = ({
 }) => {
     return (
         <motion.div
-            className={`absolute pointer-events-none text-dark-1/15 dark:text-light-1/15 ${className}`}
+            className={`absolute pointer-events-none text-dark-1/20 dark:text-light-1/20 ${className}`}
             initial={{ opacity: 0, scale: 0, rotate: 0 }}
             animate={{
                 opacity: 1,
