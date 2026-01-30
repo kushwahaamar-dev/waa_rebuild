@@ -60,15 +60,48 @@ export function FeatureGrid() {
                     </div>
                 </Link>
 
-                {/* Row 2: MBC Conference - Large hero card */}
-                <FeatureCard
-                    icon={<Trophy className="w-5 h-5" />}
-                    title="MBC Conference"
-                    description="Midwest Blockchain Consortium. Connecting blockchain innovators across the region."
+                {/* Row 2: MBC Conference - Large hero card with logo */}
+                <Link
                     href="https://www.midwestblockchain.org/"
-                    className="md:col-span-4 lg:row-span-2 min-h-[350px] lg:min-h-[450px]"
-                    ascii={<AsciiIsometricBuild className="scale-[4] opacity-100 lg:opacity-40 lg:group-hover:opacity-100 transition-opacity duration-700" />}
-                />
+                    target="_blank"
+                    className={cn(
+                        "group relative p-8 md:p-12 border-r border-b border-dark-1/10 transition-all duration-300",
+                        "hover:bg-dark-1 hover:text-light-1 dark:hover:bg-light-1 dark:hover:text-dark-1 overflow-hidden bg-grid-pattern",
+                        "flex flex-col justify-between",
+                        "md:col-span-4 lg:row-span-2 min-h-[350px] lg:min-h-[450px]"
+                    )}
+                >
+                    {/* Content */}
+                    <div className="relative z-10">
+                        <div className="flex items-center gap-4 mb-6">
+                            <div className="text-dark-1 group-hover:text-light-1 dark:group-hover:text-dark-1 transition-colors">
+                                <Trophy className="w-5 h-5" />
+                            </div>
+                            {/* MBC Logo */}
+                            <Image
+                                src="/images/mbc-logo.webp"
+                                alt="Midwest Blockchain Consortium"
+                                width={140}
+                                height={40}
+                                className="h-10 w-auto object-contain opacity-80 group-hover:opacity-100 dark:invert group-hover:dark:invert-0 transition-all"
+                            />
+                        </div>
+                        <h3 className="text-2xl font-serif mb-3 leading-tight">MBC Conference</h3>
+                        <p className="text-sm font-mono opacity-60 max-w-xs">Midwest Blockchain Consortium. Connecting blockchain innovators across the region.</p>
+                    </div>
+
+                    {/* Action */}
+                    <div className="mt-8 flex items-center text-sm font-mono opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-2 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300">
+                        EXPLORE <ArrowRight className="ml-2 w-4 h-4" />
+                    </div>
+
+                    {/* ASCII Background */}
+                    <div className="absolute right-4 bottom-4 pointer-events-none grayscale group-hover:grayscale-0 transition-all duration-300">
+                        <div className="text-dark-1/10 group-hover:text-light-1/10 dark:text-light-1/10 dark:group-hover:text-dark-1/10">
+                            <AsciiIsometricBuild className="scale-[4] opacity-100 lg:opacity-40 lg:group-hover:opacity-100 transition-opacity duration-700" />
+                        </div>
+                    </div>
+                </Link>
 
                 {/* Row 2 Right: Web3 Unfolded - Stacked vertically */}
                 <FeatureCard
