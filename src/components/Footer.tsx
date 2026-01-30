@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 export function Footer() {
     return (
         <footer className="bg-light-1 pt-0 pb-0 relative overflow-hidden border-t border-dark-1/10">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="w-full relative z-10">
                 {/* 12-column grid for precise control */}
                 <div className="grid grid-cols-1 md:grid-cols-12 h-full">
                     {/* Brand Column - 3 cols */}
