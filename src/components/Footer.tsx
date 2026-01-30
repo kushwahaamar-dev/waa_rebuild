@@ -10,9 +10,10 @@ export function Footer() {
     return (
         <footer className="bg-light-1 pt-0 pb-0 relative overflow-hidden border-t border-dark-1/10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-4 h-full">
-                    {/* Brand Column */}
-                    <div className="md:col-span-1 p-8 md:p-12 border-b md:border-b-0 md:border-r border-dark-1/10 flex flex-col justify-between h-full min-h-[300px]">
+                {/* 12-column grid for precise control */}
+                <div className="grid grid-cols-1 md:grid-cols-12 h-full">
+                    {/* Brand Column - 3 cols */}
+                    <div className="md:col-span-3 p-8 md:p-12 border-b md:border-b-0 md:border-r border-dark-1/10 flex flex-col justify-between h-full min-h-[300px]">
                         <div>
                             <Link href="/" className="block mb-6">
                                 <span className="sr-only">WAA</span>
@@ -33,8 +34,8 @@ export function Footer() {
                         </div>
                     </div>
 
-                    {/* Links Column 1 */}
-                    <div className="p-8 md:p-12 border-b md:border-b-0 md:border-r border-dark-1/10">
+                    {/* Links Column 1 - 3 cols */}
+                    <div className="md:col-span-3 p-8 md:p-12 border-b md:border-b-0 md:border-r border-dark-1/10">
                         <h4 className="font-mono text-xs uppercase tracking-widest text-dark-1/40 mb-8">Organization</h4>
                         <ul className="space-y-4 text-sm font-medium text-dark-1">
                             <li><AnimatedLink href="/about">About Us</AnimatedLink></li>
@@ -43,8 +44,8 @@ export function Footer() {
                         </ul>
                     </div>
 
-                    {/* Links Column 2 */}
-                    <div className="p-8 md:p-12 border-b md:border-b-0 md:border-r border-dark-1/10">
+                    {/* Links Column 2 - 3 cols */}
+                    <div className="md:col-span-3 p-8 md:p-12 border-b md:border-b-0 md:border-r border-dark-1/10">
                         <h4 className="font-mono text-xs uppercase tracking-widest text-dark-1/40 mb-8">Resources</h4>
                         <ul className="space-y-4 text-sm font-medium text-dark-1">
                             <li><AnimatedLink href="/projects">Projects</AnimatedLink></li>
@@ -53,8 +54,8 @@ export function Footer() {
                         </ul>
                     </div>
 
-                    {/* Newsletter / CTA Column */}
-                    <div className="p-8 md:p-12 flex flex-col justify-between">
+                    {/* Newsletter / CTA Column - 3 cols */}
+                    <div className="md:col-span-3 p-8 md:p-12 flex flex-col justify-between">
                         <div>
                             <h4 className="font-mono text-xs uppercase tracking-widest text-dark-1/40 mb-8">Stay Updated</h4>
                             <div className="space-y-4">
