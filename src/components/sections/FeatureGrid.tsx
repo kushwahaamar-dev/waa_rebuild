@@ -113,15 +113,37 @@ export function FeatureGrid() {
                     ascii={<AsciiGlobe className="scale-[2] opacity-80 lg:opacity-30 lg:group-hover:opacity-80 transition-opacity duration-700" />}
                 />
 
-                {/* Row 2 Right Bottom: Digital Membership */}
-                <FeatureCard
-                    icon={<Box className="w-5 h-5" />}
-                    title="Digital Membership"
-                    description="Exclusive NFT access. Crafted by student artists."
+                {/* Row 2 Right Bottom: Digital Membership - Full ASCII coverage */}
+                <Link
                     href="/join"
-                    className="md:col-span-2 min-h-[200px]"
-                    ascii={<AsciiFluxCard className="scale-[2] opacity-80 lg:opacity-30 lg:group-hover:opacity-80 transition-opacity duration-700" />}
-                />
+                    className={cn(
+                        "group relative p-8 md:p-12 border-r border-b border-dark-1/10 transition-all duration-300",
+                        "hover:bg-dark-1 hover:text-light-1 dark:hover:bg-light-1 dark:hover:text-dark-1 overflow-hidden bg-grid-pattern",
+                        "flex flex-col justify-between",
+                        "md:col-span-2 min-h-[200px]"
+                    )}
+                >
+                    {/* ASCII Background - Full coverage */}
+                    <div className="absolute inset-0 flex items-center justify-center pointer-events-none grayscale group-hover:grayscale-0 transition-all duration-300">
+                        <div className="text-dark-1/10 group-hover:text-light-1/10 dark:text-light-1/10 dark:group-hover:text-dark-1/10">
+                            <AsciiFluxCard className="scale-[3] md:scale-[4] opacity-100 lg:opacity-40 lg:group-hover:opacity-70 transition-opacity duration-700" />
+                        </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="relative z-10">
+                        <div className="mb-6 text-dark-1 group-hover:text-light-1 dark:group-hover:text-dark-1 transition-colors">
+                            <Box className="w-5 h-5" />
+                        </div>
+                        <h3 className="text-2xl font-serif mb-3 leading-tight">Digital Membership</h3>
+                        <p className="text-sm font-mono opacity-60 max-w-xs">Exclusive NFT access. Crafted by student artists.</p>
+                    </div>
+
+                    {/* Action */}
+                    <div className="mt-8 flex items-center text-sm font-mono opacity-100 translate-y-0 lg:opacity-0 lg:translate-y-2 lg:group-hover:opacity-100 lg:group-hover:translate-y-0 transition-all duration-300">
+                        EXPLORE <ArrowRight className="ml-2 w-4 h-4" />
+                    </div>
+                </Link>
             </div>
         </section>
     );
