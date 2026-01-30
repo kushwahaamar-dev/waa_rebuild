@@ -551,79 +551,40 @@ export const AsciiIsometricBuild = ({ className = "" }: { className?: string }) 
     useEffect(() => {
         const interval = setInterval(() => {
             setFrame(f => f + 1);
-        }, 100); // Smoother timing
+        }, 150);
         return () => clearInterval(interval);
     }, []);
 
     const renderIso = () => {
-        const width = 32;
-        const height = 12;
-        const output: string[][] = Array(height).fill(null).map(() => Array(width).fill(' '));
-
-        // Building definitions with varied heights and widths
-        const buildings = [
-            { x: 2, w: 4, h: 8 },
-            { x: 7, w: 3, h: 5 },
-            { x: 11, w: 5, h: 10 },
-            { x: 17, w: 4, h: 7 },
-            { x: 22, w: 3, h: 4 },
-            { x: 26, w: 4, h: 9 },
-        ];
-
-        // Draw buildings
-        buildings.forEach((b, idx) => {
-            for (let y = height - 1; y >= height - b.h; y--) {
-                for (let x = b.x; x < b.x + b.w && x < width; x++) {
-                    const row = y;
-                    const buildingY = height - y;
-
-                    // Building edges
-                    if (x === b.x || x === b.x + b.w - 1) {
-                        output[row][x] = '│';
-                    } else if (row === height - b.h) {
-                        // Roof
-                        output[row][x] = '▀';
-                    } else {
-                        // Windows with animation
-                        const windowLit = ((x + y + frame + idx) % 4) < 2;
-                        if ((buildingY) % 2 === 0 && (x - b.x) % 2 === 1) {
-                            output[row][x] = windowLit ? '▓' : '░';
-                        } else {
-                            output[row][x] = '▒';
-                        }
-                    }
-                }
-            }
+        const width = 28;
+        const skyline = Array(width).fill(0).map((_, x) => {
+            const h = Math.abs(Math.sin((x + frame * 0.5) * 0.3) * 4) + Math.abs(Math.cos((x - frame * 0.2) * 0.5) * 3);
+            return Math.floor(h);
         });
 
-        // Animated construction crane
-        const craneX = 14 + Math.sin(frame * 0.1) * 2;
-        const craneY = 0;
-        if (craneY >= 0 && craneY < height && craneX >= 0 && craneX < width) {
-            output[craneY][Math.floor(craneX)] = '┬';
-            if (craneY + 1 < height) output[craneY + 1][Math.floor(craneX)] = '│';
-        }
+        const chars = [" ", "▂", "▃", "▄", "▅", "▆", "▇", "█"];
 
-        // Ground line
-        for (let x = 0; x < width; x++) {
-            output[height - 1][x] = output[height - 1][x] === ' ' ? '─' : output[height - 1][x];
-        }
-
-        // Animated sparkle (construction activity)
-        const sparkles = ['✦', '✧', '·', '⊹'];
-        for (let i = 0; i < 3; i++) {
-            const sx = (frame * 2 + i * 11) % width;
-            const sy = (frame + i * 3) % (height - 2);
-            if (output[sy][sx] === ' ' || output[sy][sx] === '·') {
-                output[sy][sx] = sparkles[(frame + i) % sparkles.length];
+        let output = "";
+        for (let y = 8; y >= 0; y--) {
+            let row = "";
+            for (let x = 0; x < width; x++) {
+                if (skyline[x] > y) {
+                    if ((x + y + frame) % 3 === 0) row += "█";
+                    else if ((x + y) % 2 === 0) row += "▓";
+                    else row += "▒";
+                } else if (skyline[x] === y) {
+                    row += chars[Math.min(7, Math.floor((skyline[x] % 1) * 8)) || 7];
+                } else {
+                    row += " ";
+                }
             }
+            output += row + "\n";
         }
-
-        return output.map(row => row.join('')).join('\n');
+        return output;
     }
 
     return (
-        <pre className={`font-mono text-xs leading-none text-dark-1/25 select-none whitespace-pre overflow-hidden ${className}`}>
+        <pre className={`font-mono text-xs leading-none text-dark-1/20 select-none whitespace-pre overflow-hidden ${className}`}>
             {renderIso()}
         </pre>
     )
@@ -689,60 +650,51 @@ export const AsciiGlobe = ({ className = "" }: { className?: string }) => {
 }
 
 // ============================================
-// 14. ROTATING FLUX CARD (Premium Holographic)
+// 14. ROTATING FLUX CARD (Membership)
 // ============================================
 export const AsciiFluxCard = ({ className = "" }: { className?: string }) => {
     const [angle, setAngle] = useState(0);
 
     useEffect(() => {
-        const interval = setInterval(() => setAngle(a => a + 0.03), 30); // Smoother rotation
+        const interval = setInterval(() => setAngle(a => a + 0.1), 50);
         return () => clearInterval(interval);
     }, []);
 
     const renderCard = () => {
-        const w = 14; // Half width
-        const h = 8;  // Half height
+        const w = 12; // Half width
+        const h = 7;  // Half height
         let output = "";
 
         const cos = Math.cos(angle);
-        const shimmerSpeed = angle * 3;
 
-        // Scan grid with finer detail
-        for (let y = -10; y <= 10; y++) {
+        // Scan grid
+        for (let y = -9; y <= 9; y++) {
             let row = "";
-            for (let x = -24; x <= 24; x++) {
+            for (let x = -18; x <= 18; x++) {
+                // Inverse project: assume simplistic rotation around Y
+                // x_screen = x_world * cos(angle)
+                // So x_world = x_screen / cos(angle)
+
                 // Avoid singularity
-                const effCos = Math.abs(cos) < 0.1 ? (cos < 0 ? -0.1 : 0.1) : cos;
+                const effCos = Math.abs(cos) < 0.1 ? 0.1 : cos;
                 const x_world = x / effCos;
 
                 // Check bounds of card
                 if (Math.abs(x_world) < w && Math.abs(y) < h) {
-                    // Multiple shimmer bands for holographic effect
-                    const shimmer1 = Math.sin(shimmerSpeed + x_world * 0.3) * w;
-                    const shimmer2 = Math.sin(shimmerSpeed * 0.7 + x_world * 0.5 + Math.PI) * w;
-                    const distToShimmer1 = Math.abs(x_world - shimmer1);
-                    const distToShimmer2 = Math.abs(x_world - shimmer2);
+                    // It's on the card
 
-                    // Border with rounded corners hint
-                    const xEdge = Math.abs(x_world) > w - 1.2;
-                    const yEdge = Math.abs(y) > h - 1.2;
-                    const corner = xEdge && yEdge;
+                    // Lighting/Material effect: shimmer band
+                    // Shimmer moves across the card as it rotates
+                    const shimmerPos = Math.sin(angle * 2) * w;
+                    const distToShimmer = Math.abs(x_world - shimmerPos);
 
-                    if (corner) {
-                        row += "╭╮╰╯"[Math.floor(Math.random() * 4)] === "a" ? "·" : "░";
-                    } else if (xEdge || yEdge) {
+                    // Border check
+                    if (Math.abs(x_world) > w - 1 || Math.abs(y) > h - 1) {
                         row += "█"; // Border
-                    } else if (distToShimmer1 < 2) {
-                        // Primary rainbow shimmer
-                        const chars = "░▒▓█";
-                        row += chars[Math.floor(distToShimmer1 / 0.5)];
-                    } else if (distToShimmer2 < 1.5) {
-                        // Secondary shimmer
-                        row += "░";
+                    } else if (distToShimmer < 3) {
+                        row += "░"; // Highlight
                     } else {
-                        // Card body with subtle texture
-                        const texture = ((x_world + y) * 0.5) % 2 < 1 ? "·" : ":";
-                        row += texture;
+                        row += ":"; // Body
                     }
                 } else {
                     row += " ";
@@ -754,7 +706,7 @@ export const AsciiFluxCard = ({ className = "" }: { className?: string }) => {
     }
 
     return (
-        <pre className={`font-mono text-[9px] leading-[9px] text-dark-1/25 select-none whitespace-pre ${className}`}>
+        <pre className={`font-mono text-[10px] leading-[10px] text-dark-1/20 select-none whitespace-pre ${className}`}>
             {renderCard()}
         </pre>
     )
