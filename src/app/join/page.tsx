@@ -51,6 +51,10 @@ export default function JoinPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {/* New to Web3 */}
                     <Card className="border-dark-1/10 bg-white dark:bg-white/5 shadow-sm hover:border-dark-1/20 transition-all overflow-hidden relative group">
+                        {/* Rocket positioned in corner */}
+                        <div className="absolute top-4 right-4 opacity-20 group-hover:opacity-40 transition-opacity duration-300 pointer-events-none">
+                            <AsciiRocket />
+                        </div>
                         <CardHeader>
                             <div className="w-12 h-12 bg-dark-1/5 rounded-full flex items-center justify-center mb-4 text-dark-1">
                                 <UserPlus className="w-6 h-6" />
@@ -65,14 +69,9 @@ export default function JoinPage() {
                                 By completing our interest form, we&apos;ll connect with you directly to provide guidance or direct you to our workshops. No prior knowledge required.
                             </p>
                             <Link href="https://docs.google.com/forms/d/e/1FAIpQLSfXRPB0qqfE7RiOcstA8M2WDxG4ywcBD8AWcj7ennHVkDISXA/viewform" target="_blank">
-                                <div className="relative">
-                                    <Button className="w-full rounded-full py-6 text-base bg-dark-1 text-light-1 hover:bg-dark-1/90 relative z-10 transition-transform group-hover:translate-y-1">
-                                        Fill Interest Form
-                                    </Button>
-                                    <div className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:-translate-y-4 pointer-events-none">
-                                        <AsciiRocket />
-                                    </div>
-                                </div>
+                                <Button className="w-full rounded-full py-6 text-base bg-dark-1 text-light-1 hover:bg-dark-1/90 transition-transform group-hover:scale-[1.02]">
+                                    Fill Interest Form
+                                </Button>
                             </Link>
                         </CardContent>
                     </Card>
