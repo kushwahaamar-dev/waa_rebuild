@@ -1,6 +1,6 @@
 "use client"
 
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, Bitcoin, Blocks, Coins, Wallet, Shield, Hexagon, Zap, Globe } from "lucide-react";
 import { Button } from "../ui/button";
 import Link from "next/link";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
@@ -44,24 +44,38 @@ const MagneticButton = ({ children, className = "" }: { children: React.ReactNod
     );
 };
 
-// Floating Decorative Icons
-const FloatingIcon = ({ delay = 0, className = "" }: { delay?: number, className?: string }) => {
+// Floating Decorative Icons with custom icon support
+const FloatingIcon = ({
+    delay = 0,
+    className = "",
+    icon: Icon = Sparkles,
+    size = "w-6 h-6",
+    rotate = 0
+}: {
+    delay?: number,
+    className?: string,
+    icon?: React.ComponentType<{ className?: string }>,
+    size?: string,
+    rotate?: number
+}) => {
     return (
         <motion.div
-            className={`absolute pointer-events-none text-dark-1/10 ${className}`}
-            initial={{ opacity: 0, scale: 0 }}
+            className={`absolute pointer-events-none text-dark-1/8 dark:text-light-1/8 ${className}`}
+            initial={{ opacity: 0, scale: 0, rotate: 0 }}
             animate={{
                 opacity: 1,
                 scale: 1,
-                y: [0, -10, 0],
+                rotate: rotate,
+                y: [0, -12, 0],
             }}
             transition={{
                 opacity: { delay, duration: 0.5 },
                 scale: { delay, duration: 0.5, type: "spring" },
-                y: { delay: delay + 0.5, duration: 3, repeat: Infinity, ease: "easeInOut" }
+                rotate: { delay, duration: 0.5 },
+                y: { delay: delay + 0.5, duration: 4 + Math.random() * 2, repeat: Infinity, ease: "easeInOut" }
             }}
         >
-            <Sparkles className="w-6 h-6" />
+            <Icon className={size} />
         </motion.div>
     );
 };
@@ -117,13 +131,43 @@ export function Hero() {
             {/* Particle Network */}
             <ParticleNetwork />
 
-            {/* Floating Decorative Elements */}
+            {/* Web3/Crypto Floating Decorative Elements */}
             {mounted && (
                 <>
-                    <FloatingIcon delay={1} className="top-1/4 left-[10%]" />
-                    <FloatingIcon delay={1.2} className="top-1/3 right-[15%]" />
-                    <FloatingIcon delay={1.4} className="bottom-1/4 left-[20%]" />
-                    <FloatingIcon delay={1.6} className="bottom-1/3 right-[10%]" />
+                    {/* Original sparkles */}
+                    <FloatingIcon delay={1} className="top-1/4 left-[10%]" icon={Sparkles} />
+                    <FloatingIcon delay={1.2} className="top-1/3 right-[15%]" icon={Sparkles} />
+
+                    {/* Bitcoin icons */}
+                    <FloatingIcon delay={0.8} className="top-[15%] left-[5%]" icon={Bitcoin} size="w-8 h-8" rotate={15} />
+                    <FloatingIcon delay={1.8} className="bottom-[20%] right-[8%]" icon={Bitcoin} size="w-10 h-10" rotate={-10} />
+
+                    {/* Ethereum-style hexagons */}
+                    <FloatingIcon delay={1.1} className="top-[20%] right-[5%]" icon={Hexagon} size="w-12 h-12" rotate={30} />
+                    <FloatingIcon delay={1.5} className="bottom-[35%] left-[8%]" icon={Hexagon} size="w-6 h-6" rotate={-15} />
+
+                    {/* Blockchain blocks */}
+                    <FloatingIcon delay={1.3} className="top-[40%] left-[3%]" icon={Blocks} size="w-9 h-9" rotate={12} />
+                    <FloatingIcon delay={1.7} className="top-[25%] right-[25%]" icon={Blocks} size="w-7 h-7" rotate={-8} />
+
+                    {/* Wallet */}
+                    <FloatingIcon delay={0.9} className="bottom-[25%] left-[15%]" icon={Wallet} size="w-8 h-8" rotate={5} />
+                    <FloatingIcon delay={2.0} className="top-[50%] right-[3%]" icon={Wallet} size="w-6 h-6" rotate={-20} />
+
+                    {/* Coins */}
+                    <FloatingIcon delay={1.4} className="bottom-[40%] right-[20%]" icon={Coins} size="w-7 h-7" rotate={-12} />
+                    <FloatingIcon delay={2.2} className="top-[60%] left-[6%]" icon={Coins} size="w-9 h-9" rotate={18} />
+
+                    {/* Security/Shield */}
+                    <FloatingIcon delay={1.6} className="top-[12%] left-[30%]" icon={Shield} size="w-6 h-6" rotate={0} />
+                    <FloatingIcon delay={2.1} className="bottom-[15%] right-[30%]" icon={Shield} size="w-8 h-8" rotate={10} />
+
+                    {/* Globe (decentralized) */}
+                    <FloatingIcon delay={1.9} className="top-[35%] right-[10%]" icon={Globe} size="w-10 h-10" rotate={-5} />
+
+                    {/* Zap (fast transactions) */}
+                    <FloatingIcon delay={2.3} className="bottom-[30%] left-[25%]" icon={Zap} size="w-5 h-5" rotate={22} />
+                    <FloatingIcon delay={1.0} className="top-[55%] right-[18%]" icon={Zap} size="w-7 h-7" rotate={-15} />
                 </>
             )}
 
