@@ -500,40 +500,44 @@ export const AsciiGem = ({ className = "" }: { className?: string }) => {
 }
 
 // ============================================  
-// 11. ASCII ROCKET ANIMATION
+// 11. ASCII ROCKET ANIMATION (Premium)
 // ============================================
 export const AsciiRocket = ({ className = "" }: { className?: string }) => {
-    const [flame, setFlame] = useState(0)
+    const [frame, setFrame] = useState(0)
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setFlame(f => (f + 1) % 3)
-        }, 150)
+            setFrame(f => (f + 1) % 6)
+        }, 100) // Faster, smoother animation
         return () => clearInterval(interval)
     }, [])
 
+    // Refined flame patterns with gradient effect
     const flames = [
-        '  ▲\n ▲▲▲\n▲▲▲▲▲',
-        ' ▲▲\n▲▲▲▲\n ▲▲▲',
-        '▲▲▲\n ▲▲▲▲\n  ▲▲'
+        ['   △   ', '  ▲▲▲  ', ' ▲ ▲ ▲ '],
+        ['  △△△  ', ' ▲ ▲ ▲ ', '  ▲▲▲  '],
+        [' △ △ △ ', '  ▲▲▲  ', '   △   '],
+        ['  △△△  ', ' ▲▲▲▲▲ ', '  △ △  '],
+        ['  ▲▲▲  ', ' △ ▲ △ ', '   △   '],
+        [' ▲ ▲ ▲ ', '  ▲▲▲  ', '  △△△  '],
     ]
 
-    const rocket = `
-      ╱╲
-     ╱  ╲
-    │ ◉◉ │
-    │    │
-    │    │
-   ╱│    │╲
-  ╱ │    │ ╲
-  ╲ │    │ ╱
-   ╲╰────╯╱
-${flames[flame]}
-    `.trim()
+    const rocketBody = `
+    ╱╲    
+   ╱◉◉╲   
+  ╱    ╲  
+ │      │ 
+ │  ══  │ 
+ │      │ 
+╱│      │╲
+╲└──────┘╱`
+
+    const currentFlame = flames[frame]
+    const rocket = rocketBody + '\n' + currentFlame.join('\n')
 
     return (
-        <pre className={`font-mono text-xs text-dark-1/25 select-none whitespace-pre leading-tight ${className}`}>
-            {rocket}
+        <pre className={`font-mono text-[11px] text-dark-1/30 select-none whitespace-pre leading-[1.1] ${className}`}>
+            {rocket.trim()}
         </pre>
     )
 }
@@ -547,81 +551,129 @@ export const AsciiIsometricBuild = ({ className = "" }: { className?: string }) 
     useEffect(() => {
         const interval = setInterval(() => {
             setFrame(f => f + 1);
-        }, 150);
+        }, 100); // Smoother timing
         return () => clearInterval(interval);
     }, []);
 
     const renderIso = () => {
-        const width = 28;
-        const skyline = Array(width).fill(0).map((_, x) => {
-            const h = Math.abs(Math.sin((x + frame * 0.5) * 0.3) * 4) + Math.abs(Math.cos((x - frame * 0.2) * 0.5) * 3);
-            return Math.floor(h);
-        });
+        const width = 32;
+        const height = 12;
+        const output: string[][] = Array(height).fill(null).map(() => Array(width).fill(' '));
 
-        const chars = [" ", "▂", "▃", "▄", "▅", "▆", "▇", "█"];
+        // Building definitions with varied heights and widths
+        const buildings = [
+            { x: 2, w: 4, h: 8 },
+            { x: 7, w: 3, h: 5 },
+            { x: 11, w: 5, h: 10 },
+            { x: 17, w: 4, h: 7 },
+            { x: 22, w: 3, h: 4 },
+            { x: 26, w: 4, h: 9 },
+        ];
 
-        let output = "";
-        for (let y = 8; y >= 0; y--) {
-            let row = "";
-            for (let x = 0; x < width; x++) {
-                if (skyline[x] > y) {
-                    if ((x + y + frame) % 3 === 0) row += "█";
-                    else if ((x + y) % 2 === 0) row += "▓";
-                    else row += "▒";
-                } else if (skyline[x] === y) {
-                    row += chars[Math.min(7, Math.floor((skyline[x] % 1) * 8)) || 7];
-                } else {
-                    row += " ";
+        // Draw buildings
+        buildings.forEach((b, idx) => {
+            for (let y = height - 1; y >= height - b.h; y--) {
+                for (let x = b.x; x < b.x + b.w && x < width; x++) {
+                    const row = y;
+                    const buildingY = height - y;
+
+                    // Building edges
+                    if (x === b.x || x === b.x + b.w - 1) {
+                        output[row][x] = '│';
+                    } else if (row === height - b.h) {
+                        // Roof
+                        output[row][x] = '▀';
+                    } else {
+                        // Windows with animation
+                        const windowLit = ((x + y + frame + idx) % 4) < 2;
+                        if ((buildingY) % 2 === 0 && (x - b.x) % 2 === 1) {
+                            output[row][x] = windowLit ? '▓' : '░';
+                        } else {
+                            output[row][x] = '▒';
+                        }
+                    }
                 }
             }
-            output += row + "\n";
+        });
+
+        // Animated construction crane
+        const craneX = 14 + Math.sin(frame * 0.1) * 2;
+        const craneY = 0;
+        if (craneY >= 0 && craneY < height && craneX >= 0 && craneX < width) {
+            output[craneY][Math.floor(craneX)] = '┬';
+            if (craneY + 1 < height) output[craneY + 1][Math.floor(craneX)] = '│';
         }
-        return output;
+
+        // Ground line
+        for (let x = 0; x < width; x++) {
+            output[height - 1][x] = output[height - 1][x] === ' ' ? '─' : output[height - 1][x];
+        }
+
+        // Animated sparkle (construction activity)
+        const sparkles = ['✦', '✧', '·', '⊹'];
+        for (let i = 0; i < 3; i++) {
+            const sx = (frame * 2 + i * 11) % width;
+            const sy = (frame + i * 3) % (height - 2);
+            if (output[sy][sx] === ' ' || output[sy][sx] === '·') {
+                output[sy][sx] = sparkles[(frame + i) % sparkles.length];
+            }
+        }
+
+        return output.map(row => row.join('')).join('\n');
     }
 
     return (
-        <pre className={`font-mono text-xs leading-none text-dark-1/20 select-none whitespace-pre overflow-hidden ${className}`}>
+        <pre className={`font-mono text-xs leading-none text-dark-1/25 select-none whitespace-pre overflow-hidden ${className}`}>
             {renderIso()}
         </pre>
     )
 }
 
 // ============================================
-// 13. HIGH-FIDELITY ROTATING GLOBE (Learn)
+// 13. HIGH-FIDELITY ROTATING GLOBE (Premium)
 // ============================================
 export const AsciiGlobe = ({ className = "" }: { className?: string }) => {
     const [rot, setRot] = useState(0);
 
     useEffect(() => {
-        const interval = setInterval(() => setRot(r => r + 0.1), 50);
+        const interval = setInterval(() => setRot(r => r + 0.04), 40); // Smoother, slower rotation
         return () => clearInterval(interval);
     }, []);
 
     const renderGlobe = () => {
-        const R = 8;
+        const R = 9;
         let output = "";
 
         for (let y = -R; y <= R; y += 1) {
             let row = "";
             const y2 = y * y;
             for (let x = -R * 2.2; x <= R * 2.2; x += 1) {
-                const x2 = (x * 0.45) ** 2; // Aspect correction
+                const x2 = (x * 0.45) ** 2;
                 if (x2 + y2 <= R * R) {
-                    // Sphere point
                     const z = Math.sqrt(R * R - x2 - y2);
-                    // Map to longitude to see rotation
                     const lon = Math.atan2(x * 0.45, z) + rot;
+                    const lat = Math.asin(y / R);
 
-                    // Continents (Simulated with noise function or math)
-                    const continent = Math.sin(lon * 2) * Math.cos(y * 0.4) + Math.sin(lon + y * 0.5);
+                    // Enhanced continent pattern with latitude bands
+                    const continent =
+                        Math.sin(lon * 3) * Math.cos(lat * 2.5) * 0.7 +
+                        Math.sin(lon * 1.5 + lat) * 0.5 +
+                        Math.cos(lon * 2 - lat * 2) * 0.3;
 
-                    if (continent > 0.6) row += "█";
-                    else if (continent > 0.3) row += "▓";
-                    else if (continent > 0) row += "▒";
-                    else if (continent > -0.4) row += "·";
-                    else row += " "; // Ocean
+                    // Gradient from land to ocean
+                    if (continent > 0.7) row += "█";
+                    else if (continent > 0.4) row += "▓";
+                    else if (continent > 0.15) row += "▒";
+                    else if (continent > -0.1) row += "░";
+                    else if (continent > -0.5) row += "·";
+                    else row += " ";
                 } else {
-                    row += " ";
+                    // Orbit ring hint at equator
+                    if (Math.abs(y) < 1 && Math.abs(x) > R * 1.8 && Math.abs(x) < R * 2.2) {
+                        row += "·";
+                    } else {
+                        row += " ";
+                    }
                 }
             }
             output += row + "\n";
@@ -630,58 +682,67 @@ export const AsciiGlobe = ({ className = "" }: { className?: string }) => {
     }
 
     return (
-        <pre className={`font-mono text-[10px] leading-[10px] text-dark-1/20 select-none whitespace-pre ${className}`}>
+        <pre className={`font-mono text-[10px] leading-[10px] text-dark-1/25 select-none whitespace-pre ${className}`}>
             {renderGlobe()}
         </pre>
     )
 }
 
 // ============================================
-// 14. ROTATING FLUX CARD (Membership)
+// 14. ROTATING FLUX CARD (Premium Holographic)
 // ============================================
 export const AsciiFluxCard = ({ className = "" }: { className?: string }) => {
     const [angle, setAngle] = useState(0);
 
     useEffect(() => {
-        const interval = setInterval(() => setAngle(a => a + 0.1), 50);
+        const interval = setInterval(() => setAngle(a => a + 0.03), 30); // Smoother rotation
         return () => clearInterval(interval);
     }, []);
 
     const renderCard = () => {
-        const w = 12; // Half width
-        const h = 7;  // Half height
+        const w = 14; // Half width
+        const h = 8;  // Half height
         let output = "";
 
         const cos = Math.cos(angle);
+        const shimmerSpeed = angle * 3;
 
-        // Scan grid
-        for (let y = -9; y <= 9; y++) {
+        // Scan grid with finer detail
+        for (let y = -10; y <= 10; y++) {
             let row = "";
-            for (let x = -18; x <= 18; x++) {
-                // Inverse project: assume simplistic rotation around Y
-                // x_screen = x_world * cos(angle)
-                // So x_world = x_screen / cos(angle)
-
+            for (let x = -24; x <= 24; x++) {
                 // Avoid singularity
-                const effCos = Math.abs(cos) < 0.1 ? 0.1 : cos;
+                const effCos = Math.abs(cos) < 0.1 ? (cos < 0 ? -0.1 : 0.1) : cos;
                 const x_world = x / effCos;
 
                 // Check bounds of card
                 if (Math.abs(x_world) < w && Math.abs(y) < h) {
-                    // It's on the card
+                    // Multiple shimmer bands for holographic effect
+                    const shimmer1 = Math.sin(shimmerSpeed + x_world * 0.3) * w;
+                    const shimmer2 = Math.sin(shimmerSpeed * 0.7 + x_world * 0.5 + Math.PI) * w;
+                    const distToShimmer1 = Math.abs(x_world - shimmer1);
+                    const distToShimmer2 = Math.abs(x_world - shimmer2);
 
-                    // Lighting/Material effect: shimmer band
-                    // Shimmer moves across the card as it rotates
-                    const shimmerPos = Math.sin(angle * 2) * w;
-                    const distToShimmer = Math.abs(x_world - shimmerPos);
+                    // Border with rounded corners hint
+                    const xEdge = Math.abs(x_world) > w - 1.2;
+                    const yEdge = Math.abs(y) > h - 1.2;
+                    const corner = xEdge && yEdge;
 
-                    // Border check
-                    if (Math.abs(x_world) > w - 1 || Math.abs(y) > h - 1) {
+                    if (corner) {
+                        row += "╭╮╰╯"[Math.floor(Math.random() * 4)] === "a" ? "·" : "░";
+                    } else if (xEdge || yEdge) {
                         row += "█"; // Border
-                    } else if (distToShimmer < 3) {
-                        row += "░"; // Highlight
+                    } else if (distToShimmer1 < 2) {
+                        // Primary rainbow shimmer
+                        const chars = "░▒▓█";
+                        row += chars[Math.floor(distToShimmer1 / 0.5)];
+                    } else if (distToShimmer2 < 1.5) {
+                        // Secondary shimmer
+                        row += "░";
                     } else {
-                        row += ":"; // Body
+                        // Card body with subtle texture
+                        const texture = ((x_world + y) * 0.5) % 2 < 1 ? "·" : ":";
+                        row += texture;
                     }
                 } else {
                     row += " ";
@@ -693,89 +754,116 @@ export const AsciiFluxCard = ({ className = "" }: { className?: string }) => {
     }
 
     return (
-        <pre className={`font-mono text-[10px] leading-[10px] text-dark-1/20 select-none whitespace-pre ${className}`}>
+        <pre className={`font-mono text-[9px] leading-[9px] text-dark-1/25 select-none whitespace-pre ${className}`}>
             {renderCard()}
         </pre>
     )
 }
 
+
 // ============================================
-// 15. COLLEGE.XYZ PATHWAY ANIMATION
+// 15. COLLEGE.XYZ PATHWAY ANIMATION (Premium)
 // ============================================
 export const AsciiCollegeXYZ = ({ className = "" }: { className?: string }) => {
     const [frame, setFrame] = useState(0);
 
     useEffect(() => {
         const interval = setInterval(() => {
-            setFrame(f => (f + 1) % 12);
-        }, 200);
+            setFrame(f => (f + 1) % 60);
+        }, 80); // Smoother animation timing
         return () => clearInterval(interval);
     }, []);
 
     const renderPathways = () => {
-        const width = 32;
-        const height = 18;
+        const width = 36;
+        const height = 20;
         const output: string[][] = Array(height).fill(null).map(() => Array(width).fill(' '));
 
-        // Central hub (college)
-        const centerX = 8;
-        const centerY = 9;
+        // Central hub position
+        const centerX = 6;
+        const centerY = 10;
 
-        // Industry nodes (destinations)
+        // Industry destinations with visual hierarchy
         const nodes = [
-            { x: 26, y: 3, label: '◆' },   // Top right
-            { x: 28, y: 9, label: '◆' },   // Right
-            { x: 26, y: 15, label: '◆' },  // Bottom right
-            { x: 18, y: 2, label: '◇' },   // Top
-            { x: 18, y: 16, label: '◇' },  // Bottom
+            { x: 30, y: 3, label: '◆', pulse: 0 },    // Top right - Major
+            { x: 32, y: 10, label: '◆', pulse: 1 },   // Right - Major
+            { x: 30, y: 17, label: '◆', pulse: 2 },   // Bottom right - Major
+            { x: 22, y: 1, label: '○', pulse: 3 },    // Top mid
+            { x: 22, y: 19, label: '○', pulse: 4 },   // Bottom mid
         ];
 
-        // Draw pathways with animation
+        // Draw smooth bezier-like pathways
         nodes.forEach((node, idx) => {
-            const progress = ((frame + idx * 2) % 12) / 12;
+            const pulsePhase = ((frame + idx * 12) % 60) / 60;
+            const steps = 30;
 
-            // Draw line from center to node
-            const steps = 20;
-            for (let i = 0; i < steps; i++) {
+            for (let i = 0; i <= steps; i++) {
                 const t = i / steps;
-                const x = Math.round(centerX + (node.x - centerX) * t);
-                const y = Math.round(centerY + (node.y - centerY) * t);
+
+                // Bezier curve for smoother paths
+                const controlX = (centerX + node.x) / 2 + (idx % 2 === 0 ? 4 : -2);
+                const controlY = (centerY + node.y) / 2;
+
+                // Quadratic bezier
+                const x = Math.round((1 - t) * (1 - t) * centerX + 2 * (1 - t) * t * controlX + t * t * node.x);
+                const y = Math.round((1 - t) * (1 - t) * centerY + 2 * (1 - t) * t * controlY + t * t * node.y);
 
                 if (x >= 0 && x < width && y >= 0 && y < height) {
-                    // Animated pulse along the path
-                    const dist = Math.abs(t - progress);
-                    if (dist < 0.15) {
+                    // Wave-based pulse animation
+                    const wavePos = (Math.sin((t - pulsePhase) * Math.PI * 4) + 1) / 2;
+                    const dist = Math.abs(t - pulsePhase);
+
+                    if (dist < 0.08 || (dist > 0.92 && pulsePhase < 0.08)) {
                         output[y][x] = '●';
-                    } else if (dist < 0.3) {
+                    } else if (dist < 0.15) {
+                        output[y][x] = '◉';
+                    } else if (dist < 0.25) {
                         output[y][x] = '○';
                     } else {
-                        output[y][x] = output[y][x] === ' ' ? '·' : output[y][x];
+                        // Gradient intensity for path
+                        const pathChar = t < 0.3 ? '·' : t < 0.7 ? '∙' : '·';
+                        if (output[y][x] === ' ') output[y][x] = pathChar;
                     }
                 }
             }
 
-            // Draw node
-            if (node.x < width && node.y < height) {
+            // Draw destination node with glow
+            if (node.x < width && node.y >= 0 && node.y < height) {
                 output[node.y][node.x] = node.label;
+                // Subtle glow around major nodes
+                if (node.label === '◆') {
+                    if (node.x - 1 >= 0 && output[node.y][node.x - 1] === ' ') output[node.y][node.x - 1] = '·';
+                    if (node.x + 1 < width && output[node.y][node.x + 1] === ' ') output[node.y][node.x + 1] = '·';
+                }
             }
         });
 
-        // Draw central hub
-        const hubChars = ['◉', '◎'];
-        const hubChar = hubChars[Math.floor(frame / 3) % 2];
-        output[centerY][centerX] = hubChar;
-        output[centerY - 1][centerX] = '│';
-        output[centerY + 1][centerX] = '│';
-        output[centerY][centerX - 1] = '─';
-        output[centerY][centerX + 1] = '─';
+        // Draw refined central hub - college.xyz logo hint
+        const hubPulse = Math.sin(frame * 0.2) > 0;
+        output[centerY][centerX] = hubPulse ? '◉' : '◎';
 
-        // Add some floating particles
-        const particles = ['✦', '✧', '·'];
-        for (let i = 0; i < 5; i++) {
-            const px = (frame * 3 + i * 7) % width;
-            const py = (frame + i * 4) % height;
-            if (output[py][px] === ' ') {
-                output[py][px] = particles[i % particles.length];
+        // Hub crosshairs
+        const crossChars = '─│┌┐└┘';
+        if (centerY > 0) output[centerY - 1][centerX] = '│';
+        if (centerY < height - 1) output[centerY + 1][centerX] = '│';
+        if (centerX > 0) output[centerY][centerX - 1] = '─';
+        if (centerX < width - 1) output[centerY][centerX + 1] = '─';
+
+        // Corner accents
+        if (centerY > 0 && centerX > 0) output[centerY - 1][centerX - 1] = '┌';
+        if (centerY > 0 && centerX < width - 1) output[centerY - 1][centerX + 1] = '┐';
+        if (centerY < height - 1 && centerX > 0) output[centerY + 1][centerX - 1] = '└';
+        if (centerY < height - 1 && centerX < width - 1) output[centerY + 1][centerX + 1] = '┘';
+
+        // Ambient particles - minimal and elegant
+        const particleCount = 3;
+        for (let i = 0; i < particleCount; i++) {
+            const angle = (frame * 0.05 + i * (Math.PI * 2 / particleCount));
+            const radius = 8 + Math.sin(frame * 0.1 + i) * 2;
+            const px = Math.round(centerX + Math.cos(angle) * radius);
+            const py = Math.round(centerY + Math.sin(angle) * (radius * 0.5));
+            if (px >= 0 && px < width && py >= 0 && py < height && output[py][px] === ' ') {
+                output[py][px] = '✧';
             }
         }
 
@@ -783,8 +871,9 @@ export const AsciiCollegeXYZ = ({ className = "" }: { className?: string }) => {
     };
 
     return (
-        <pre className={`font-mono text-xs leading-tight text-dark-1/25 select-none whitespace-pre ${className}`}>
+        <pre className={`font-mono text-xs leading-tight text-dark-1/30 select-none whitespace-pre ${className}`}>
             {renderPathways()}
         </pre>
     );
 }
+
