@@ -12,37 +12,7 @@ export function FeatureGrid() {
             {/* Asymmetric Bento Grid - 6 columns for more flexibility */}
             <div className="grid grid-cols-1 md:grid-cols-6 border-t border-l border-dark-1/10 bg-white/50 dark:bg-white/5 backdrop-blur-sm">
 
-                {/* Row 1: MBC Conference - Large hero card */}
-                <FeatureCard
-                    icon={<Trophy className="w-5 h-5" />}
-                    title="MBC Conference"
-                    description="Midwest Blockchain Consortium. Connecting blockchain innovators across the region."
-                    href="https://www.midwestblockchain.org/"
-                    className="md:col-span-4 lg:row-span-2 min-h-[350px] lg:min-h-[450px]"
-                    ascii={<AsciiIsometricBuild className="scale-[4] opacity-100 lg:opacity-40 lg:group-hover:opacity-100 transition-opacity duration-700" />}
-                />
-
-                {/* Row 1 Right: Web3 Unfolded - Stacked vertically */}
-                <FeatureCard
-                    icon={<GraduationCap className="w-5 h-5" />}
-                    title="Web3 Unfolded"
-                    description="Curated curriculum. From zero to shipped dApp."
-                    href="/learn"
-                    className="md:col-span-2 min-h-[200px]"
-                    ascii={<AsciiGlobe className="scale-[2] opacity-80 lg:opacity-30 lg:group-hover:opacity-80 transition-opacity duration-700" />}
-                />
-
-                {/* Row 1 Right Bottom: Digital Membership */}
-                <FeatureCard
-                    icon={<Box className="w-5 h-5" />}
-                    title="Digital Membership"
-                    description="Exclusive NFT access. Crafted by student artists."
-                    href="/join"
-                    className="md:col-span-2 min-h-[200px]"
-                    ascii={<AsciiFluxCard className="scale-[2] opacity-80 lg:opacity-30 lg:group-hover:opacity-80 transition-opacity duration-700" />}
-                />
-
-                {/* Row 2: college.xyz - Wide card with logo */}
+                {/* Row 1: college.xyz - Wide card with logo at TOP */}
                 <Link
                     href="https://www.college.xyz/"
                     target="_blank"
@@ -89,6 +59,36 @@ export function FeatureGrid() {
                         </div>
                     </div>
                 </Link>
+
+                {/* Row 2: MBC Conference - Large hero card */}
+                <FeatureCard
+                    icon={<Trophy className="w-5 h-5" />}
+                    title="MBC Conference"
+                    description="Midwest Blockchain Consortium. Connecting blockchain innovators across the region."
+                    href="https://www.midwestblockchain.org/"
+                    className="md:col-span-4 lg:row-span-2 min-h-[350px] lg:min-h-[450px]"
+                    ascii={<AsciiIsometricBuild className="scale-[4] opacity-100 lg:opacity-40 lg:group-hover:opacity-100 transition-opacity duration-700" />}
+                />
+
+                {/* Row 2 Right: Web3 Unfolded - Stacked vertically */}
+                <FeatureCard
+                    icon={<GraduationCap className="w-5 h-5" />}
+                    title="Web3 Unfolded"
+                    description="Curated curriculum. From zero to shipped dApp."
+                    href="/learn"
+                    className="md:col-span-2 min-h-[200px]"
+                    ascii={<AsciiGlobe className="scale-[2] opacity-80 lg:opacity-30 lg:group-hover:opacity-80 transition-opacity duration-700" />}
+                />
+
+                {/* Row 2 Right Bottom: Digital Membership */}
+                <FeatureCard
+                    icon={<Box className="w-5 h-5" />}
+                    title="Digital Membership"
+                    description="Exclusive NFT access. Crafted by student artists."
+                    href="/join"
+                    className="md:col-span-2 min-h-[200px]"
+                    ascii={<AsciiFluxCard className="scale-[2] opacity-80 lg:opacity-30 lg:group-hover:opacity-80 transition-opacity duration-700" />}
+                />
             </div>
         </section>
     );
