@@ -1,14 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useState, type ReactNode } from "react";
-import { useAccount, useReadContracts } from "wagmi";
-import { WAA_MEMBERSHIP_CONTRACT, ERC1155_ABI } from "@/lib/wagmi";
-
-// Token IDs to check - Manifold uses the claim page ID
-const TOKEN_IDS_TO_CHECK = [
-    BigInt("4147314928"), // Manifold claim page ID from URL
-    BigInt(1),            // Fallback token ID
-];
+import { useAccount } from "wagmi";
 
 interface MembershipContextType {
     isConnected: boolean;
@@ -27,37 +20,46 @@ const MembershipContext = createContext<MembershipContextType>({
 export function MembershipProvider({ children }: { children: ReactNode }) {
     const { address, isConnected } = useAccount();
     const [mounted, setMounted] = useState(false);
-
-    // Check NFT ownership for multiple token IDs
-    const { data: balances, isLoading } = useReadContracts({
-        contracts: address
-            ? TOKEN_IDS_TO_CHECK.map((tokenId) => ({
-                address: WAA_MEMBERSHIP_CONTRACT,
-                abi: ERC1155_ABI,
-                functionName: "balanceOf" as const,
-                args: [address, tokenId] as const,
-            }))
-            : [],
-        query: {
-            enabled: !!address && mounted,
-        },
-    });
+    const [isMember, setIsMember] = useState(false);
+    const [isChecking, setIsChecking] = useState(false);
 
     useEffect(() => {
         setMounted(true);
     }, []);
 
-    // Check if any of the token balances are > 0
-    const isMember = balances?.some(
-        (result) => result.status === "success" && (result.result as bigint) > BigInt(0)
-    ) ?? false;
+    // Check NFT ownership via API route
+    useEffect(() => {
+        async function checkMembership() {
+            if (!address || !mounted) {
+                setIsMember(false);
+                return;
+            }
+
+            setIsChecking(true);
+            try {
+                const response = await fetch(`/api/membership?address=${address}`);
+                const data = await response.json();
+                setIsMember(data.isMember === true);
+                if (data.isMember) {
+                    console.log('WAA Member verified! Token ID:', data.tokenId, 'Balance:', data.balance);
+                }
+            } catch (error) {
+                console.error('Error checking membership:', error);
+                setIsMember(false);
+            } finally {
+                setIsChecking(false);
+            }
+        }
+
+        checkMembership();
+    }, [address, mounted]);
 
     return (
         <MembershipContext.Provider
             value={{
                 isConnected: mounted && isConnected,
                 isMember,
-                isChecking: isLoading,
+                isChecking,
                 address,
             }}
         >
@@ -69,4 +71,3 @@ export function MembershipProvider({ children }: { children: ReactNode }) {
 export function useMembership() {
     return useContext(MembershipContext);
 }
-
