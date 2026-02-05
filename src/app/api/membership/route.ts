@@ -12,11 +12,10 @@ export async function GET(request: NextRequest) {
     }
 
     try {
-        // Use Base RPC to call balanceOf with different token IDs
+        // Token ID 2 is the WAA Membership token (confirmed from screenshot)
         const tokenIdsToCheck = [
-            "0xF73C1752", // 4147314928 in hex
-            "0x1",       // Token ID 1
-            "0x0",       // Token ID 0
+            "0x2",       // Token ID 2 - THE CORRECT ONE!
+            "0x1",       // Token ID 1 (fallback)
         ];
 
         const baseRpcUrl = "https://mainnet.base.org";
