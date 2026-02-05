@@ -7,6 +7,7 @@ import { Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { AnimatedLink, MagneticButton } from "./MicroInteractions";
 import { ThemeToggle } from "./ThemeToggle";
+import { CartButton } from "./merch/CartButton";
 
 const links = [
     { href: "/about", label: "About" },
@@ -14,6 +15,7 @@ const links = [
     { href: "/events", label: "Events" },
     { href: "/projects", label: "Projects" },
     { href: "/learn", label: "Learn" },
+    { href: "/merch", label: "Merch" },
 ];
 
 export function Navbar() {
@@ -52,6 +54,7 @@ export function Navbar() {
                                 <span className="absolute left-0 -bottom-0.5 w-0 h-[2px] bg-dark-1 transition-all duration-300 ease-out group-hover:w-full" />
                             </Link>
                         ))}
+                        <CartButton />
                         <ThemeToggle />
                         <Link href="/join">
                             <motion.div
@@ -134,7 +137,10 @@ export function Navbar() {
                                 animate={{ y: 0, opacity: 1 }}
                                 transition={{ delay: links.length * 0.05 }}
                             >
-                                <ThemeToggle />
+                                <div className="flex items-center gap-4 mb-4">
+                                    <CartButton />
+                                    <ThemeToggle />
+                                </div>
                                 <Link href="/join" onClick={() => setIsOpen(false)}>
                                     <Button className="w-full rounded-full">Join WAA</Button>
                                 </Link>

@@ -36,6 +36,7 @@ import { ConsoleSignature } from "@/components/EasterEggs/ConsoleSignature";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { Cart } from "@/components/merch/Cart";
 
 export default function RootLayout({
   children,
@@ -59,6 +60,7 @@ export default function RootLayout({
           <div className="relative z-10">
             {children}
           </div>
+          <Cart />
           <Analytics />
           <SpeedInsights />
         </ThemeProvider>

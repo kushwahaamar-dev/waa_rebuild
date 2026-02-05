@@ -829,3 +829,201 @@ export const AsciiCollegeXYZ = ({ className = "" }: { className?: string }) => {
     );
 }
 
+// ============================================
+// 16. ASCII PRICE TAG (Merch) - Clean & Minimal
+// ============================================
+export const AsciiPriceTag = ({ className = "" }: { className?: string }) => {
+    const [frame, setFrame] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setFrame(f => (f + 1) % 4);
+        }, 600);
+        return () => clearInterval(interval);
+    }, []);
+
+    const shine = ['·', '∙', '•', '∙'];
+    const s = shine[frame];
+
+    const tag = `
+    ╭──────────╮
+    │ ${s} NEW ${s} │╮
+    │──────────││
+    │  $$$$$   ││
+    │  MERCH   ││
+    │──────────│╯
+    ╰──────────╯
+    `.trim();
+
+    return (
+        <pre className={`font-mono text-[11px] text-dark-1/20 select-none whitespace-pre leading-tight ${className}`}>
+            {tag}
+        </pre>
+    );
+};
+
+// ============================================
+// 17. ASCII SHOPPING CART (Merch) - Smooth Flow
+// ============================================
+export const AsciiShoppingBag = ({ className = "" }: { className?: string }) => {
+    const [frame, setFrame] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setFrame(f => (f + 1) % 8);
+        }, 250);
+        return () => clearInterval(interval);
+    }, []);
+
+    // Floating item animation
+    const pos = Math.sin(frame * 0.8) > 0;
+    const item = pos ? '◆' : '◇';
+
+    const cart = `
+       ${item}
+    ╭──────╮
+    │ ▪ ▪ ▪│
+    │      │
+    ╰──┬┬──╯
+       ○○
+    `.trim();
+
+    return (
+        <pre className={`font-mono text-[12px] text-dark-1/20 select-none whitespace-pre leading-tight ${className}`}>
+            {cart}
+        </pre>
+    );
+};
+
+// ============================================
+// 18. ASCII BADGE (Events) - Elegant Circle
+// ============================================
+export const AsciiPOAPBadge = ({ className = "" }: { className?: string }) => {
+    const [frame, setFrame] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setFrame(f => (f + 1) % 12);
+        }, 150);
+        return () => clearInterval(interval);
+    }, []);
+
+    // Rotating glow effect
+    const glowChars = ['◠', '◡', '◠', '◡'];
+    const fillChars = ['░', '▒', '▓', '█', '▓', '▒'];
+    const fill = fillChars[frame % fillChars.length];
+
+    const badge = `
+     ╭─────╮
+    ╱  ${fill}${fill}${fill}  ╲
+   │  POAP  │
+   │   ◉    │
+    ╲  ${fill}${fill}${fill}  ╱
+     ╰─────╯
+    `.trim();
+
+    return (
+        <pre className={`font-mono text-[11px] text-dark-1/20 select-none whitespace-pre leading-tight ${className}`}>
+            {badge}
+        </pre>
+    );
+};
+
+// ============================================
+// 19. ASCII SPARKLE BURST (Events) - Radial Pulse
+// ============================================
+export const AsciiCommunity = ({ className = "" }: { className?: string }) => {
+    const [frame, setFrame] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setFrame(f => (f + 1) % 8);
+        }, 200);
+        return () => clearInterval(interval);
+    }, []);
+
+    // Pulsing nodes
+    const nodes = ['○', '◎', '◉', '●', '◉', '◎', '○', '○'];
+    const n = nodes[frame];
+
+    const network = `
+      ${n}
+     ╱│╲
+    ${n}─●─${n}
+     ╲│╱
+      ${n}
+    `.trim();
+
+    return (
+        <pre className={`font-mono text-[12px] text-dark-1/20 select-none whitespace-pre leading-tight ${className}`}>
+            {network}
+        </pre>
+    );
+};
+
+// ============================================
+// 20. ASCII SHIRT TAG (Merch) - Clean Label
+// ============================================
+export const AsciiTshirt = ({ className = "" }: { className?: string }) => {
+    const [frame, setFrame] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setFrame(f => (f + 1) % 6);
+        }, 400);
+        return () => clearInterval(interval);
+    }, []);
+
+    const star = frame % 2 === 0 ? '✦' : '✧';
+
+    const shirt = `
+     ${star}     ${star}
+    ╭───────╮
+   ╱│ W A A │╲
+  ╱ ╰───────╯ ╲
+  │           │
+  │     ◉     │
+  │           │
+  ╰───────────╯
+    `.trim();
+
+    return (
+        <pre className={`font-mono text-[10px] text-dark-1/20 select-none whitespace-pre leading-tight ${className}`}>
+            {shirt}
+        </pre>
+    );
+};
+
+// ============================================
+// 21. ASCII HANGER (Merch) - Simple Swing
+// ============================================
+export const AsciiHanger = ({ className = "" }: { className?: string }) => {
+    const [frame, setFrame] = useState(0);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setFrame(f => (f + 1) % 4);
+        }, 500);
+        return () => clearInterval(interval);
+    }, []);
+
+    // Gentle swing
+    const swings = [' ', '', '', ' '];
+    const s = swings[frame];
+
+    const hanger = `
+${s}    ╭─○─╮
+${s}   ╱     ╲
+${s}  ╱       ╲
+${s} ╱─────────╲
+${s}│   DRIP   │
+${s}│  ▓▓▓▓▓   │
+${s}╰──────────╯
+    `.trim();
+
+    return (
+        <pre className={`font-mono text-[10px] text-dark-1/20 select-none whitespace-pre leading-tight ${className}`}>
+            {hanger}
+        </pre>
+    );
+};
