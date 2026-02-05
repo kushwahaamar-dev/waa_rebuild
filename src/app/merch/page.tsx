@@ -128,7 +128,7 @@ export default function MerchPage() {
 
                     {/* Wallet Connect & Member Banner */}
                     <motion.div
-                        className="mt-10 flex flex-col items-center gap-4"
+                        className="mt-10 flex flex-col items-center gap-3"
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.8, delay: 1.1 }}
@@ -136,24 +136,22 @@ export default function MerchPage() {
                         <WalletConnect />
 
                         {isMember && (
-                            <motion.div
-                                initial={{ opacity: 0, scale: 0.9 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/20 rounded-2xl"
+                            <motion.p
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                className="text-sm text-dark-1/60 font-mono"
                             >
-                                <Shield className="w-5 h-5 text-emerald-600" />
-                                <span className="font-serif text-lg text-emerald-700">
-                                    All merch is <span className="font-bold">FREE</span> for you!
-                                </span>
-                            </motion.div>
+                                ✦ All items are <span className="font-medium text-dark-1">complimentary</span> for members
+                            </motion.p>
                         )}
 
                         {!isConnected && (
-                            <p className="text-sm text-dark-1/40 font-mono">
-                                Connect wallet to verify membership for free merch
+                            <p className="text-xs text-dark-1/40 font-mono tracking-wide">
+                                Members get free merch · Connect to verify
                             </p>
                         )}
                     </motion.div>
+
 
 
                     {/* Stats Row */}

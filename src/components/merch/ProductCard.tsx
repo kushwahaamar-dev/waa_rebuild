@@ -120,16 +120,15 @@ export function ProductCard({ product, isMember = false }: ProductCardProps) {
                         </span>
                     </div>
 
-                    {/* Member FREE Badge */}
+                    {/* Member Complimentary Badge */}
                     {isMember && (
                         <div className="absolute top-4 right-4">
                             <motion.span
                                 initial={{ scale: 0 }}
                                 animate={{ scale: 1 }}
-                                className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full text-xs font-mono uppercase tracking-wider text-white shadow-lg"
+                                className="px-3 py-1.5 bg-dark-1 rounded-full text-xs font-mono uppercase tracking-wider text-light-1"
                             >
-                                <Gift className="w-3 h-3" />
-                                FREE
+                                ✦ Free
                             </motion.span>
                         </div>
                     )}
@@ -150,8 +149,8 @@ export function ProductCard({ product, isMember = false }: ProductCardProps) {
                         <div className="flex-shrink-0 text-right">
                             {isMember ? (
                                 <div className="flex flex-col items-end">
-                                    <span className="text-xl font-serif text-emerald-600">$0.00</span>
-                                    <span className="text-xs text-dark-1/40 line-through">{formatPrice(product.price)}</span>
+                                    <span className="text-lg font-serif text-dark-1">$0</span>
+                                    <span className="text-xs text-dark-1/30 line-through">{formatPrice(product.price)}</span>
                                 </div>
                             ) : (
                                 <span className="text-xl font-serif text-dark-1">

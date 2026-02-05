@@ -3,7 +3,7 @@
 import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { useMembership } from "@/context/MembershipContext";
 import { motion, AnimatePresence } from "framer-motion";
-import { Wallet, Check, LogOut, Loader2, Shield, X } from "lucide-react";
+import { Wallet, Check, LogOut, Loader2, X, Sparkles } from "lucide-react";
 import { useState, useEffect } from "react";
 
 export function WalletConnect() {
@@ -20,7 +20,7 @@ export function WalletConnect() {
 
     if (!mounted) {
         return (
-            <div className="h-12 w-48 bg-dark-1/5 rounded-xl animate-pulse" />
+            <div className="h-12 w-48 bg-dark-1/5 rounded-full animate-pulse" />
         );
     }
 
@@ -32,40 +32,40 @@ export function WalletConnect() {
             <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="flex items-center gap-3"
+                className="flex items-center gap-2"
             >
-                {/* Membership Status */}
+                {/* Membership Status Badge */}
                 {isChecking ? (
-                    <div className="flex items-center gap-2 px-4 py-2 bg-dark-1/5 rounded-xl">
-                        <Loader2 className="w-4 h-4 animate-spin" />
-                        <span className="text-sm font-mono">Verifying...</span>
+                    <div className="flex items-center gap-2 px-4 py-2.5 bg-dark-1/5 rounded-full border border-dark-1/10">
+                        <Loader2 className="w-3.5 h-3.5 animate-spin text-dark-1/50" />
+                        <span className="text-xs font-mono uppercase tracking-wider text-dark-1/50">Verifying</span>
                     </div>
                 ) : isMember ? (
                     <motion.div
                         initial={{ scale: 0.9, opacity: 0 }}
                         animate={{ scale: 1, opacity: 1 }}
-                        className="flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/20 rounded-xl"
+                        className="flex items-center gap-2 px-4 py-2.5 bg-dark-1 text-light-1 rounded-full"
                     >
-                        <Shield className="w-4 h-4 text-emerald-600" />
-                        <span className="text-sm font-mono text-emerald-700 font-medium">
-                            WAA Member
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span className="text-xs font-mono uppercase tracking-wider">
+                            Member
                         </span>
                     </motion.div>
                 ) : (
-                    <div className="flex items-center gap-2 px-4 py-2 bg-amber-500/10 border border-amber-500/20 rounded-xl">
-                        <span className="text-sm font-mono text-amber-700">
+                    <div className="flex items-center gap-2 px-4 py-2.5 bg-dark-1/5 rounded-full border border-dark-1/10">
+                        <span className="text-xs font-mono uppercase tracking-wider text-dark-1/50">
                             Not a Member
                         </span>
                     </div>
                 )}
 
-                {/* Connected Wallet */}
+                {/* Connected Wallet Address */}
                 <button
                     onClick={() => disconnect()}
-                    className="flex items-center gap-2 px-4 py-2.5 bg-dark-1 text-light-1 rounded-xl hover:bg-dark-1/90 transition-colors group"
+                    className="flex items-center gap-2 px-4 py-2.5 bg-dark-1/5 hover:bg-dark-1/10 rounded-full border border-dark-1/10 transition-colors group"
                 >
-                    <span className="font-mono text-sm">{formatAddress(address)}</span>
-                    <LogOut className="w-4 h-4 opacity-50 group-hover:opacity-100 transition-opacity" />
+                    <span className="font-mono text-xs text-dark-1/70">{formatAddress(address)}</span>
+                    <LogOut className="w-3.5 h-3.5 text-dark-1/40 group-hover:text-dark-1/70 transition-colors" />
                 </button>
             </motion.div>
         );
