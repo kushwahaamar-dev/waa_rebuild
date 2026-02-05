@@ -6,8 +6,11 @@ import { ProductCard } from "@/components/merch/ProductCard";
 import { products, getProductsByCategory, Product } from "@/data/products";
 import { useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Shirt, Package, Sparkles, ArrowDown, Diamond, ShoppingBag, Mail, MapPin } from "lucide-react";
+import { Shirt, Package, Sparkles, ArrowDown, Diamond, ShoppingBag, Mail, MapPin, Shield } from "lucide-react";
 import { AsciiTshirt, AsciiShoppingBag, AsciiHanger } from "@/components/AsciiAnimations";
+import { WalletConnect } from "@/components/merch/WalletConnect";
+import { useMembership } from "@/context/MembershipContext";
+
 
 type Category = 'all' | Product['category'];
 
@@ -20,11 +23,13 @@ const categories: { value: Category; label: string; icon: React.ReactNode }[] = 
 
 export default function MerchPage() {
     const [activeCategory, setActiveCategory] = useState<Category>('all');
+    const { isMember, isConnected } = useMembership();
     const heroRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll({
         target: heroRef,
         offset: ["start start", "end start"]
     });
+
 
     const heroOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
     const heroScale = useTransform(scrollYProgress, [0, 1], [1, 0.9]);
@@ -121,6 +126,36 @@ export default function MerchPage() {
                         Every piece tells a story. Every purchase fuels the movement.
                     </motion.p>
 
+                    {/* Wallet Connect & Member Banner */}
+                    <motion.div
+                        className="mt-10 flex flex-col items-center gap-4"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.8, delay: 1.1 }}
+                    >
+                        <WalletConnect />
+
+                        {isMember && (
+                            <motion.div
+                                initial={{ opacity: 0, scale: 0.9 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                className="flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-emerald-500/10 to-green-500/10 border border-emerald-500/20 rounded-2xl"
+                            >
+                                <Shield className="w-5 h-5 text-emerald-600" />
+                                <span className="font-serif text-lg text-emerald-700">
+                                    All merch is <span className="font-bold">FREE</span> for you!
+                                </span>
+                            </motion.div>
+                        )}
+
+                        {!isConnected && (
+                            <p className="text-sm text-dark-1/40 font-mono">
+                                Connect wallet to verify membership for free merch
+                            </p>
+                        )}
+                    </motion.div>
+
+
                     {/* Stats Row */}
                     <motion.div
                         className="flex items-center justify-center gap-8 md:gap-16 mt-12"
@@ -214,7 +249,7 @@ export default function MerchPage() {
                                 exit={{ opacity: 0, y: 20 }}
                                 transition={{ duration: 0.3, delay: index * 0.05 }}
                             >
-                                <ProductCard product={product} />
+                                <ProductCard product={product} isMember={isMember} />
                             </motion.div>
                         ))}
                     </motion.div>

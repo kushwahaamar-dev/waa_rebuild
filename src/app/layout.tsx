@@ -37,6 +37,8 @@ import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { Cart } from "@/components/merch/Cart";
+import { Web3Provider } from "@/components/Web3Provider";
+import { MembershipProvider } from "@/context/MembershipContext";
 
 export default function RootLayout({
   children,
@@ -54,17 +56,22 @@ export default function RootLayout({
           enableSystem={false}
           disableTransitionOnChange
         >
-          <ConsoleSignature />
-          <KonamiMatrix />
-          <GridBackground />
-          <div className="relative z-10">
-            {children}
-          </div>
-          <Cart />
-          <Analytics />
-          <SpeedInsights />
+          <Web3Provider>
+            <MembershipProvider>
+              <ConsoleSignature />
+              <KonamiMatrix />
+              <GridBackground />
+              <div className="relative z-10">
+                {children}
+              </div>
+              <Cart />
+              <Analytics />
+              <SpeedInsights />
+            </MembershipProvider>
+          </Web3Provider>
         </ThemeProvider>
       </body>
     </html>
   );
 }
+

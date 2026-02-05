@@ -3,21 +3,24 @@
 import { Product, formatPrice } from '@/data/products';
 import { useCartStore } from '@/store/cartStore';
 import { Button } from '@/components/ui/button';
-import { Plus, Check } from 'lucide-react';
+import { Plus, Check, Gift } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from 'react';
 
 interface ProductCardProps {
     product: Product;
+    isMember?: boolean;
 }
 
-export function ProductCard({ product }: ProductCardProps) {
+export function ProductCard({ product, isMember = false }: ProductCardProps) {
     const addItem = useCartStore((state) => state.addItem);
     const [selectedSize, setSelectedSize] = useState<string | undefined>(
         product.sizes?.[1] // Default to M if available
     );
     const [isAdding, setIsAdding] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
+
+    const displayPrice = isMember ? 0 : product.price;
 
     const handleAddToCart = () => {
         setIsAdding(true);
@@ -94,7 +97,7 @@ export function ProductCard({ product }: ProductCardProps) {
                                         className="flex items-center gap-2"
                                     >
                                         <Plus className="w-4 h-4" />
-                                        Add to Cart
+                                        {isMember ? 'Claim Free' : 'Add to Cart'}
                                     </motion.span>
                                 )}
                             </AnimatePresence>
@@ -116,6 +119,20 @@ export function ProductCard({ product }: ProductCardProps) {
                             {product.category}
                         </span>
                     </div>
+
+                    {/* Member FREE Badge */}
+                    {isMember && (
+                        <div className="absolute top-4 right-4">
+                            <motion.span
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-emerald-500 to-green-500 rounded-full text-xs font-mono uppercase tracking-wider text-white shadow-lg"
+                            >
+                                <Gift className="w-3 h-3" />
+                                FREE
+                            </motion.span>
+                        </div>
+                    )}
                 </div>
 
                 {/* Product Info */}
@@ -131,9 +148,16 @@ export function ProductCard({ product }: ProductCardProps) {
                             </p>
                         </div>
                         <div className="flex-shrink-0 text-right">
-                            <span className="text-xl font-serif text-dark-1">
-                                {formatPrice(product.price)}
-                            </span>
+                            {isMember ? (
+                                <div className="flex flex-col items-end">
+                                    <span className="text-xl font-serif text-emerald-600">$0.00</span>
+                                    <span className="text-xs text-dark-1/40 line-through">{formatPrice(product.price)}</span>
+                                </div>
+                            ) : (
+                                <span className="text-xl font-serif text-dark-1">
+                                    {formatPrice(displayPrice)}
+                                </span>
+                            )}
                         </div>
                     </div>
 
