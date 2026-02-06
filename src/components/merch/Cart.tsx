@@ -378,34 +378,24 @@ We will reply with payment instructions (Venmo/Zelle) and pickup details.
                                             >
                                                 Back
                                             </Button>
-                                            <div className="flex flex-col gap-3 w-full flex-[2]">
-                                                <Button
-                                                    onClick={() => handleSubmitOrder('default')}
-                                                    disabled={isSubmitting}
-                                                    className="w-full py-6 rounded-xl bg-dark-1 hover:bg-dark-1/90 text-light-1"
-                                                >
-                                                    {isSubmitting ? (
-                                                        <motion.div
-                                                            className="w-5 h-5 border-2 border-light-1/30 border-t-light-1 rounded-full"
-                                                            animate={{ rotate: 360 }}
-                                                            transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                                                        />
-                                                    ) : (
-                                                        <>
-                                                            Place Order (App)
-                                                            <Mail className="w-4 h-4 ml-2" />
-                                                        </>
-                                                    )}
-                                                </Button>
-                                                <Button
-                                                    onClick={() => handleSubmitOrder('gmail')}
-                                                    disabled={isSubmitting}
-                                                    variant="outline"
-                                                    className="w-full py-6 rounded-xl border-dark-1/10 text-dark-1/60 hover:text-dark-1 hover:bg-dark-1/5 text-xs font-mono"
-                                                >
-                                                    Open in Gmail Web ↗
-                                                </Button>
-                                            </div>
+                                            <Button
+                                                onClick={() => handleSubmitOrder('gmail')}
+                                                disabled={isSubmitting}
+                                                className="w-full py-6 rounded-xl bg-dark-1 hover:bg-dark-1/90 text-light-1"
+                                            >
+                                                {isSubmitting ? (
+                                                    <motion.div
+                                                        className="w-5 h-5 border-2 border-light-1/30 border-t-light-1 rounded-full"
+                                                        animate={{ rotate: 360 }}
+                                                        transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                                                    />
+                                                ) : (
+                                                    <>
+                                                        Place Order via Gmail
+                                                        <Mail className="w-4 h-4 ml-2" />
+                                                    </>
+                                                )}
+                                            </Button>
                                         </div>
                                     )}
                                 </div>
