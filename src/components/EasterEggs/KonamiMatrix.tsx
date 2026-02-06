@@ -111,6 +111,7 @@ export function KonamiMatrix() {
     useEffect(() => {
         const handleKeyDown = (e: KeyboardEvent) => {
             if (active) return;
+            if (!e.key) return;
             setSequence(prev => {
                 const updated = [...prev, e.key.toLowerCase()].slice(-secretCode.length);
                 if (JSON.stringify(updated) === JSON.stringify(secretCode)) {
