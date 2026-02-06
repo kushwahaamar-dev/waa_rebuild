@@ -142,13 +142,13 @@ export default function MerchPage() {
                                 animate={{ opacity: 1 }}
                                 className="text-sm text-dark-1/60 font-mono"
                             >
-                                ✦ All items are <span className="font-medium text-dark-1">complimentary</span> for members
+                                ✦ Your <span className="font-medium text-dark-1">Welcome Package</span> is waiting below
                             </motion.p>
                         )}
 
                         {!isConnected && (
                             <p className="text-xs text-dark-1/40 font-mono tracking-wide">
-                                Members get free merch · Connect to verify
+                                Members get a free Welcome Package · Connect to claim
                             </p>
                         )}
                     </motion.div>
