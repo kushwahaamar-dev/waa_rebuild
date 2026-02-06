@@ -10,21 +10,21 @@ To ensure members can only claim their Welcome Package once, we use Vercel KV (R
 2. **Navigate to Storage**
    Click on the **"Storage"** tab in the top menu.
 
-3. **Create Database**
-   - Click **"Create Database"**.
-   - Select **"KV"** (Redis).
-   - Give it a name (e.g., `waa-redemption-store`).
-   - Select a region (closest to your users, e.g., `Washington, D.C. (iad1)`).
-   - Click **"Create"**.
+3. **Create Database (Marketplace)**
+   - You will see a list of providers (Marketplace).
+   - Click on **Upstash**.
+   - Select **Upstash for Redis** (Serverless DB).
+   - Click **Add Integration**.
+   - Select your project (`waa-rebuild`) from the dropdown.
+   - Click **Add Integration** / **Install**.
+   - Follow the prompts to create a **Redis** database (Free tier is usually sufficient).
+   - Ensure it links to your `waa-rebuild` project.
 
-4. **Connect to Project**
-   - Once created, look for the **"Connect Project"** button.
-   - Select your `waa-rebuild` project.
-   - Click **"Connect"**.
-
-5. **Done!**
-   Vercel automatically adds the necessary environment variables (`KV_REST_API_URL`, `KV_REST_API_TOKEN`) to your project.
-   - **Note:** You may need to redeploy your project for the changes to take effect.
+4. **Verify Environment Variables**
+   - Once installed, Vercel will automatically add the environment variables:
+     - `KV_REST_API_URL`
+     - `KV_REST_API_TOKEN`
+   - You can verify this in **Settings** → **Environment Variables**.
 
 ## Verification
 1. Connect your wallet on the site.
