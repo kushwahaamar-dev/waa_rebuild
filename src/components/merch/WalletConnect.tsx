@@ -160,7 +160,6 @@ function WalletIcon({ connector }: { connector: string }) {
     const icons: Record<string, string> = {
         "MetaMask": "🦊",
         "Coinbase Wallet": "🔵",
-        "WalletConnect": "🔗",
         "Phantom": "👻",
         "Injected": "💳",
     };
@@ -176,7 +175,6 @@ function getConnectorDescription(name: string): string {
     const descriptions: Record<string, string> = {
         "MetaMask": "Browser extension wallet",
         "Coinbase Wallet": "Easy-to-use mobile & web wallet",
-        "WalletConnect": "Connect with mobile wallets",
         "Phantom": "Multi-chain wallet for crypto",
         "Injected": "Your browser wallet",
     };

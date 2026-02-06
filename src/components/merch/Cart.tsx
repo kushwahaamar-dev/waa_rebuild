@@ -38,35 +38,77 @@ export function Cart() {
             setError('Please enter your name');
             return;
         }
-        if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-            setError('Please enter a valid email');
+        if (!email.trim()) {
+            setError('Please enter your email is required for the order');
             return;
         }
 
         setIsSubmitting(true);
         setError(null);
 
-        try {
-            const res = await fetch('/api/order', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ name, email, phone, items }),
-            });
+        // Check for Welcome Package to track redemption
+        const hasWelcomePackage = items.some(item => item.product.memberExclusive);
 
-            const data = await res.json();
-
-            if (!res.ok) {
-                throw new Error(data.error || 'Failed to submit order');
+        if (hasWelcomePackage) {
+            try {
+                // We track it as "redeemed" when they click order, 
+                // assuming they will send the email. It's a trade-off for the "free/easy" approach.
+                const ethereum = (window as any).ethereum;
+                if (ethereum?.request) {
+                    const accounts = await ethereum.request({ method: 'eth_accounts' });
+                    if (accounts?.[0]) {
+                        await fetch('/api/redemption', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ address: accounts[0] }),
+                        });
+                    }
+                }
+            } catch (e) {
+                console.error('Failed to mark redemption', e);
             }
-
-            setOrderId(data.orderId);
-            setStep('success');
-            clearCart();
-        } catch (err: any) {
-            setError(err.message);
-        } finally {
-            setIsSubmitting(false);
         }
+
+        // Construct Mailto Link
+        const orderId = `WAA-${Date.now().toString(36).toUpperCase().slice(-6)}`;
+        const subject = `New WAA Order: ${orderId}`;
+
+        const itemsList = items.map(item =>
+            `• ${item.quantity}x ${item.product.name} ${item.size ? `(${item.size})` : ''} - ${formatPrice(item.product.price * item.quantity)}`
+        ).join('\n');
+
+        const body = `
+ORDER REQUEST: ${orderId}
+========================
+
+CUSTOMER DETAILS
+Name: ${name}
+Email: ${email}
+Phone: ${phone || 'N/A'}
+
+ORDER ITEMS
+${itemsList}
+
+------------------------
+TOTAL: ${formatPrice(subtotal)}
+------------------------
+
+Please send this email to submit your order.
+We will reply with payment instructions (Venmo/Zelle) and pickup details.
+        `.trim();
+
+        // recipients
+        const recipients = 'intern@waatech.xyz,kushwahaamar2ak5@gmail.com';
+        const mailtoLink = `mailto:${recipients}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+
+        // Open email client
+        window.location.href = mailtoLink;
+
+        // Clear cart and show success state
+        setOrderId(orderId);
+        setStep('success');
+        clearCart();
+        setIsSubmitting(false);
     };
 
     const handleClose = () => {
@@ -369,8 +411,8 @@ export function Cart() {
                                                     />
                                                 ) : (
                                                     <>
-                                                        Place Order
-                                                        <ArrowRight className="w-4 h-4 ml-2" />
+                                                        Place Order via Email
+                                                        <Mail className="w-4 h-4 ml-2" />
                                                     </>
                                                 )}
                                             </Button>
