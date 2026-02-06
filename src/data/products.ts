@@ -4,10 +4,24 @@ export interface Product {
     description: string;
     price: number; // in cents
     image: string;
-    category: 'apparel' | 'accessories' | 'stickers';
+    category: 'apparel' | 'accessories' | 'stickers' | 'bundle';
     sizes?: string[];
     inStock: boolean;
+    memberExclusive?: boolean;
 }
+
+// Member-exclusive Welcome Package (one-time claim)
+export const WELCOME_PACKAGE: Product = {
+    id: 'member-welcome-package',
+    name: 'Member Welcome Package',
+    description: 'Exclusive package for WAA members. Includes: WAA Classic Tee, Sticker Pack, and Holographic Sticker. One-time claim.',
+    price: 0,
+    image: '/images/merch/welcome-package.png',
+    category: 'bundle',
+    sizes: ['S', 'M', 'L', 'XL', '2XL'],
+    inStock: true,
+    memberExclusive: true,
+};
 
 export const products: Product[] = [
     {
@@ -98,3 +112,4 @@ export function getProductsByCategory(category: Product['category']): Product[] 
 export function formatPrice(priceInCents: number): string {
     return `$${(priceInCents / 100).toFixed(2)}`;
 }
+

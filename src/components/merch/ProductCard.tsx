@@ -9,18 +9,15 @@ import { useState } from 'react';
 
 interface ProductCardProps {
     product: Product;
-    isMember?: boolean;
 }
 
-export function ProductCard({ product, isMember = false }: ProductCardProps) {
+export function ProductCard({ product }: ProductCardProps) {
     const addItem = useCartStore((state) => state.addItem);
     const [selectedSize, setSelectedSize] = useState<string | undefined>(
         product.sizes?.[1] // Default to M if available
     );
     const [isAdding, setIsAdding] = useState(false);
     const [isHovered, setIsHovered] = useState(false);
-
-    const displayPrice = isMember ? 0 : product.price;
 
     const handleAddToCart = () => {
         setIsAdding(true);
@@ -97,7 +94,7 @@ export function ProductCard({ product, isMember = false }: ProductCardProps) {
                                         className="flex items-center gap-2"
                                     >
                                         <Plus className="w-4 h-4" />
-                                        {isMember ? 'Claim Free' : 'Add to Cart'}
+                                        Add to Cart
                                     </motion.span>
                                 )}
                             </AnimatePresence>
@@ -120,18 +117,7 @@ export function ProductCard({ product, isMember = false }: ProductCardProps) {
                         </span>
                     </div>
 
-                    {/* Member Complimentary Badge */}
-                    {isMember && (
-                        <div className="absolute top-4 right-4">
-                            <motion.span
-                                initial={{ scale: 0 }}
-                                animate={{ scale: 1 }}
-                                className="px-3 py-1.5 bg-dark-1 rounded-full text-xs font-mono uppercase tracking-wider text-light-1"
-                            >
-                                ✦ Free
-                            </motion.span>
-                        </div>
-                    )}
+
                 </div>
 
                 {/* Product Info */}
@@ -147,16 +133,9 @@ export function ProductCard({ product, isMember = false }: ProductCardProps) {
                             </p>
                         </div>
                         <div className="flex-shrink-0 text-right">
-                            {isMember ? (
-                                <div className="flex flex-col items-end">
-                                    <span className="text-lg font-serif text-dark-1">$0</span>
-                                    <span className="text-xs text-dark-1/30 line-through">{formatPrice(product.price)}</span>
-                                </div>
-                            ) : (
-                                <span className="text-xl font-serif text-dark-1">
-                                    {formatPrice(displayPrice)}
-                                </span>
-                            )}
+                            <span className="text-xl font-serif text-dark-1">
+                                {formatPrice(product.price)}
+                            </span>
                         </div>
                     </div>
 

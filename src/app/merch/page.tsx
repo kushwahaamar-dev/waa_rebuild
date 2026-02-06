@@ -3,10 +3,11 @@
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 import { ProductCard } from "@/components/merch/ProductCard";
+import { WelcomePackageCard } from "@/components/merch/WelcomePackageCard";
 import { products, getProductsByCategory, Product } from "@/data/products";
 import { useState, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
-import { Shirt, Package, Sparkles, ArrowDown, Diamond, ShoppingBag, Mail, MapPin, Shield } from "lucide-react";
+import { Shirt, Package, Sparkles, ArrowDown, Diamond, ShoppingBag, Mail, MapPin } from "lucide-react";
 import { AsciiTshirt, AsciiShoppingBag, AsciiHanger } from "@/components/AsciiAnimations";
 import { WalletConnect } from "@/components/merch/WalletConnect";
 import { useMembership } from "@/context/MembershipContext";
@@ -234,6 +235,9 @@ export default function MerchPage() {
             {/* Products Grid */}
             <section className="flex-grow py-16 px-4 sm:px-6 lg:px-8">
                 <div className="max-w-7xl mx-auto">
+                    {/* Welcome Package for Members */}
+                    <WelcomePackageCard />
+
                     <motion.div
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
                         layout
@@ -247,7 +251,7 @@ export default function MerchPage() {
                                 exit={{ opacity: 0, y: 20 }}
                                 transition={{ duration: 0.3, delay: index * 0.05 }}
                             >
-                                <ProductCard product={product} isMember={isMember} />
+                                <ProductCard product={product} />
                             </motion.div>
                         ))}
                     </motion.div>
