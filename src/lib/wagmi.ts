@@ -1,38 +1,19 @@
-"use client";
+import { http, createConfig } from 'wagmi';
+import { base } from 'wagmi/chains';
+import { coinbaseWallet, injected } from 'wagmi/connectors';
 
-import { http, createConfig } from "wagmi";
-import { base } from "wagmi/chains";
-import { coinbaseWallet, injected, walletConnect } from "wagmi/connectors";
-
-// WAA Membership NFT Contract on Base
+// WAA Membership Contract Address (Base)
 export const WAA_MEMBERSHIP_CONTRACT = "0x9b931844FbaA55Bd8E709909468DA0aD2be26052" as const;
-
-// WalletConnect Project ID - Get from https://cloud.walletconnect.com
-const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID || "demo";
 
 export const wagmiConfig = createConfig({
     chains: [base],
     connectors: [
-        // Injected wallets (MetaMask, Phantom, Rabby, etc.)
-        injected({
-            shimDisconnect: true,
-        }),
-        // Coinbase Wallet
+        injected({ shimDisconnect: true }),
         coinbaseWallet({
             appName: "WAA Merch",
-            appLogoUrl: "https://waatech.xyz/images/logo.png",
+            appLogoUrl: "https://waatech.xyz/images/logo.png"
         }),
-        // WalletConnect (for mobile wallets)
-        walletConnect({
-            projectId,
-            showQrModal: true,
-            metadata: {
-                name: "WAA Merch",
-                description: "Web3 At Austin Merchandise Store",
-                url: "https://waatech.xyz",
-                icons: ["https://waatech.xyz/images/logo.png"],
-            },
-        }),
+        // WalletConnect removed as requested
     ],
     transports: {
         [base.id]: http(),
@@ -40,13 +21,10 @@ export const wagmiConfig = createConfig({
     ssr: true,
 });
 
-// ERC-1155 ABI for balanceOf check
+// ERC1155 ABI for checking balance
 export const ERC1155_ABI = [
     {
-        inputs: [
-            { name: "account", type: "address" },
-            { name: "id", type: "uint256" },
-        ],
+        inputs: [{ name: "account", type: "address" }, { name: "id", type: "uint256" }],
         name: "balanceOf",
         outputs: [{ name: "", type: "uint256" }],
         stateMutability: "view",
